@@ -25,9 +25,9 @@ hy2_port=$1
 
 install_singbox() { 
 clear
-echo -e "${green}原脚本地址：${re}${yellow}https://github.com/eooce/Sing-box${re}\n"
+echo -e "${yellow}原脚本地址：${re}${purple}https://github.com/eooce/Sing-box${re}"
 echo -e "${yellow}本脚本为修改版，只有hysteria2协议，开始运行前，请确保在面板${purple}已开放1个udp端口${re}"
-echo -e "${yellow}面板${purple}Additional services中的Run your own applications${yellow}已开启为${purplw}Enabled${yellow}状态${re}"
+echo -e "${yellow}面板${purple}Additional services中的Run your own applications${yellow}已开启为${purple}Enabled${yellow}状态${re}"
         cd $WORKDIR
         download_and_run_singbox
         get_links
@@ -298,7 +298,9 @@ hysteria2://$UUID@$IP:$hy2_port/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-hy2
 EOF
 echo
 echo -e "${yellow}hysteria2节点信息如下：${re}"
+echo
 cat list.txt
+echo
 sleep 3 
 rm -rf config.json sb.log core fake_useragent_0.2.0.json
 
