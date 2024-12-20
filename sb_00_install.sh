@@ -24,26 +24,17 @@ export NEZHA_KEY=${NEZHA_KEY:-''}
 ps aux | grep $(whoami) | grep -v "sshd\|bash\|grep" | awk '{print $2}' | xargs -r kill -9 > /dev/null 2>&1
 
 # tcp端口
-read_vless_port() {
-    vless_port=57950
-}
+vless_port=57950
 # udp端口
-read_hy2_port() {
-    hy2_port=13612
-}
+hy2_port=13612
 # udp端口
-read_tuic_port() {
-    tuic_port=20546
-}
+tuic_port=20546
 
 install_singbox() {
 echo -e "${yellow}本脚本同时三协议共存${purple}(vless-reality|hysteria2|tuic)${re}"
 echo -e "${yellow}开始运行前，请确保在面板${purple}已开放3个端口，一个tcp端口和两个udp端口${re}"
 echo -e "${yellow}面板${purple}Additional services中的Run your own applications${yellow}已开启为${purplw}Enabled${yellow}状态${re}"
         cd $WORKDIR
-        read_vless_port
-        read_hy2_port
-        read_tuic_port
         download_and_run_singbox
         get_links
 }
