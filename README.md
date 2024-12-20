@@ -5,5 +5,5 @@ bash -c "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox
 
 * 查看节点信息
 ```bash
-bash "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/node_info.sh)"
+bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/node_info.sh)
 ```
