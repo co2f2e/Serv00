@@ -24,11 +24,11 @@ export NEZHA_KEY=${NEZHA_KEY:-''}
 ps aux | grep $(whoami) | grep -v "sshd\|bash\|grep" | awk '{print $2}' | xargs -r kill -9 > /dev/null 2>&1
 
 # tcp端口
-vless_port=57950
+vless_port=$1
 # udp端口
-hy2_port=13612
+hy2_port=$2
 # udp端口
-tuic_port=20546
+tuic_port=$3
 
 install_singbox() {
 echo -e "${yellow}本脚本同时三协议共存${purple}(vless-reality|hysteria2|tuic)${re}"
