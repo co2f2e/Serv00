@@ -24,7 +24,7 @@ export NEZHA_KEY=${NEZHA_KEY:-''}
 ps aux | grep $(whoami) | grep -v "sshd\|bash\|grep" | awk '{print $2}' | xargs -r kill -9 > /dev/null 2>&1
 
 # udp端口
-hy2_port=$2
+hy2_port=$1
 
 install_singbox() {
 echo -e "${yellow}本脚只有hysteria2协议${re}"
