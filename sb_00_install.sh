@@ -105,7 +105,7 @@ openssl req -new -x509 -days 3650 -key "private.key" -out "cert.pem" -subj "/CN=
 {
   "log": {
     "disabled": true,
-    "level": "info",
+    "level": "debug",
     "timestamp": true
   },
   "dns": {
