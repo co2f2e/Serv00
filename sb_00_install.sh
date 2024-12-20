@@ -26,7 +26,7 @@ ps aux | grep $(whoami) | grep -v "sshd\|bash\|grep" | awk '{print $2}' | xargs 
 # udp端口
 hy2_port=$1
 
-install_singbox() 
+install_singbox() { 
 clear
 echo -e "${yellow}本脚只有hysteria2协议${re}"
 echo -e "${yellow}开始运行前，请确保在面板${purple}已开放1个udp端口${re}"
