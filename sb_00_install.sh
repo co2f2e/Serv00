@@ -25,7 +25,8 @@ hy2_port=$1
 
 install_singbox() { 
 clear
-echo -e "${yellow}本脚本只有hysteria2协议，开始运行前，请确保在面板${purple}已开放1个udp端口${re}"
+echo -e "${green}原脚本地址：${re}${yellow}https://github.com/eooce/Sing-box${re}\n"
+echo -e "${yellow}本脚本为修改版，只有hysteria2协议，开始运行前，请确保在面板${purple}已开放1个udp端口${re}"
 echo -e "${yellow}面板${purple}Additional services中的Run your own applications${yellow}已开启为${purplw}Enabled${yellow}状态${re}"
         cd $WORKDIR
         download_and_run_singbox
@@ -68,10 +69,8 @@ download_with_fallback() {
         kill $CURL_PID 2>/dev/null
         wait $CURL_PID 2>/dev/null
         wget -q -O "$NEW_FILENAME" "$URL"
-        echo -e "\e[1;32mDownloading $NEW_FILENAME by wget\e[0m"
     else
         wait $CURL_PID
-        echo -e "\e[1;32mDownloading $NEW_FILENAME by curl\e[0m"
     fi
 }
 
@@ -259,6 +258,7 @@ EOF
 if [ -e "$(basename ${FILE_MAP[web]})" ]; then
     nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 &
     sleep 2
+    echo
     pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null && green "$(basename ${FILE_MAP[web]}) is running" || { red "$(basename ${FILE_MAP[web]}) is not running, restarting..."; pkill -x "$(basename ${FILE_MAP[web]})" && nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 & sleep 2; purple "$(basename ${FILE_MAP[web]}) restarted"; }
 fi
 sleep 1
@@ -299,7 +299,6 @@ EOF
 echo
 echo -e "${yellow}hysteria2节点信息如下：${re}"
 cat list.txt
-purple "Running done!\n"
 sleep 3 
 rm -rf config.json sb.log core fake_useragent_0.2.0.json
 
