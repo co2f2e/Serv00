@@ -1,9 +1,15 @@
 #!/bin/bash
 
-# 定义颜色
-re="\033[0m"
-yellow="\e[1;33m"
-yellow() { echo -e "\e[1;33m$1\033[0m"; }
+YELLOW='\033[33m'
+RESET='\033[0m'
+
+red() {
+	echo -e "${RED}${1}${RESET}"
+}
+
+yellow() {
+	echo -e "${YELLOW}${1}${RESET}"
+}
 clear
 yellow "节点信息："
 echo
