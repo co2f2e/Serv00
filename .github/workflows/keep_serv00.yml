@@ -18,7 +18,7 @@ jobs:
 
       - name: SSH into server and run script
         run: |
-          sshpass -p "${{ secrets.PASSWORD }}" ssh -v -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }} << 'EOF'
+          sshpass -p "${{ secrets.PASSWORD }}" ssh -v -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }} << "EOF"
             set -e  
             curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox_install.sh -o singbox_install.sh || { echo 'Script download failed'; exit 1; }
             bash singbox_install.sh -- "${{ secrets.UDP_PORT }}" || { echo 'Script execution failed'; exit 1; }
