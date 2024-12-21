@@ -146,7 +146,7 @@ openssl req -new -x509 -days 3650 -key "private.key" -out "cert.pem" -subj "/CN=
        "listen_port": $hy2_port,
        "users": [
          {
-             "password": "$UUID"
+             "password": "${UUID}-${hy2_port}"
          }
      ],
      "masquerade": "https://bing.com",
