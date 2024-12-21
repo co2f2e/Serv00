@@ -17,19 +17,8 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/node_info.s
 ## 保活
 * 1.创建Actions
 * 2.直接复制keep_serv00.yml内容使用
-* 3.创建四个仓库机密`HOSTNAME`,内容填写对应的信息
-```bash
-HOSTNAME
-```
-```bash
-USERNAME
-```
-```bash
-PASSWORD
-```
-```bash
-UDPPORT
-```
+* 3.创建四个仓库机密:`HOSTNAME`、`USERNAME`、`PASSWORD`、`UDPPORT`,内容填写对应的信息
+
 
 
 
