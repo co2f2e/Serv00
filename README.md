@@ -14,8 +14,8 @@ bash -c "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox
 ```bash
 bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/node_info.sh)
 ```
-## 保活保进程
-* 1.创建action
+## 保活
+* 1.创建Actions
 * 2.直接复制keep_serv00.yml内容使用
 * 3.创建四个仓库机密,内容填写对应的信息
 ```bash
