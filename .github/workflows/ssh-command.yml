@@ -1,4 +1,4 @@
-name: Deploy via SSH
+name: keep_serv00
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:  # 支持手动执行  
 
 jobs:
-  deploy:
+  keep_serv00:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,7 +19,13 @@ jobs:
       - name: SSH into server and run script
         run: |
           sshpass -p "${{ secrets.PASSWORD }}" ssh -v -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }} << 'EOF'
-            set -e  # 如果出现任何错误，脚本会停止执行
+            set -e  
             curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox_install.sh -o singbox_install.sh || { echo 'Script download failed'; exit 1; }
-            bash singbox_install.sh -- 9999 || { echo 'Script execution failed'; exit 1; }
+            bash singbox_install.sh -- "${{ secrets.UDP_PORT }}" || { echo 'Script execution failed'; exit 1; }
+            if [ $? -eq 0 ]; then
+              echo "Script executed successfully."
+            else
+              echo "Script execution failed."
+              exit 1
+            fi
           EOF
