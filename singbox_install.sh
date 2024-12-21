@@ -12,6 +12,14 @@ yellow() { echo -e "\e[1;33m$1\033[0m"; }
 purple() { echo -e "\e[1;35m$1\033[0m"; }
 reading() { read -p "$(red "$1")" "$2"; }
 
+# udp端口
+hy2_port=$1
+
+if [[ -z "$hy2_port" ]] || ! [[ "$hy2_port" =~ ^[0-9]+$ ]] || (( hy2_port < 1024 || hy2_port > 65535 )); then
+  echo -e "${yellow}端口为空或端口有误${re}"
+  exit 1
+fi
+
 USERNAME=$(whoami)
 HOSTNAME=$(hostname)
 export UUID=${UUID:-'fc2a78a1-8088-451e-a4cc-3dc10fb5b5ee'}
@@ -19,9 +27,6 @@ export UUID=${UUID:-'fc2a78a1-8088-451e-a4cc-3dc10fb5b5ee'}
 [[ "$HOSTNAME" == "s1.ct8.pl" ]] && WORKDIR="domains/${USERNAME}.ct8.pl/logs" || WORKDIR="domains/${USERNAME}.serv00.net/logs"
 [ -d "$WORKDIR" ] && rm -rf "$WORKDIR" && mkdir -p "$WORKDIR" && chmod 777 "$WORKDIR" || (mkdir -p "$WORKDIR" && chmod 777 "$WORKDIR")
 ps aux | grep $(whoami) | grep -v "sshd\|bash\|grep" | awk '{print $2}' | xargs -r kill -9 > /dev/null 2>&1 
-
-# udp端口
-hy2_port=$1
 
 install_singbox() { 
 clear
