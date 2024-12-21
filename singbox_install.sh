@@ -266,7 +266,7 @@ if [ -e "$(basename ${FILE_MAP[web]})" ]; then
     echo
     pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null && green "$(basename ${FILE_MAP[web]}) is running" || {
       red "$(basename ${FILE_MAP[web]}) is not running, restarting..."
-      pkill -x "$(basename ${FILE_MAP[web]})" || true
+      pkill -9 "$(basename ${FILE_MAP[web]})" || true
       echo "Sleeping for 3 seconds after pkill"
       sleep 3
       echo "Starting process $(basename ${FILE_MAP[web]})"
