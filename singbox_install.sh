@@ -293,9 +293,15 @@ get_links(){
 ISP=$(curl -s --max-time 2 https://speed.cloudflare.com/meta | awk -F\" '{print $26}' | sed -e 's/ /_/g' || echo "0")
 get_name() { if [ "$HOSTNAME" = "s1.ct8.pl" ]; then SERVER="CT8"; else SERVER=$(echo "$HOSTNAME" | cut -d '.' -f 1); fi; echo "$SERVER"; }
 NAME="$ISP-$(get_name)"
-cat > list.txt <<EOF
-hysteria2://$UUID@$IP:$hy2_port/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-hy2
+if [[ "$HOSTNAME" == "s1.ct8.pl" ]]; then
+    cat > list.txt <<EOF
+hysteria2://$UUID@$IP:$hy2_port/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-${HOSTNAME}
 EOF
+else
+    cat > list.txt <<EOF
+hysteria2://$UUID@$IP:$hy2_port/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-${USERNAME}
+EOF
+fi
 echo
 echo -e "${yellow}hysteria2节点信息如下：${re}"
 echo
