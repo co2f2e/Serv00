@@ -21,4 +21,4 @@ jobs:
         password: ${{ secrets.PASSWORD }} 
         port: 22                         
         script: |
-          bash -c "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox_install.sh)" -- 9999
+          bash -c "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox_install.sh)" -- ${{ secrets.PORT}}
