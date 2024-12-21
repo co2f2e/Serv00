@@ -16,12 +16,15 @@ jobs:
       - name: Install sshpass
         run: sudo apt-get install -y sshpass || echo "sshpass already installed"
 
+      - name: Set UDPPORT environment variable
+        run: echo "UDPPORT=${{ secrets.UDPPORT }}" >> $GITHUB_ENV
+
       - name: SSH into server and run script
         run: |
-          sshpass -p "${{ secrets.PASSWORD }}" ssh -v -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }} << "EOF"
+          sshpass -p "${{ secrets.PASSWORD }}" ssh -v -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }} << 'EOF'
             set -e  
             curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox_install.sh -o singbox_install.sh || { echo 'Script download failed'; exit 1; }
-            bash singbox_install.sh -- "${{ secrets.UDPPORT }}" || { echo 'Script execution failed'; exit 1; }
+            bash singbox_install.sh -- "$UDPPORT" || { echo 'Script execution failed'; exit 1; }
             if [ $? -eq 0 ]; then
               echo "Script executed successfully."
             else
