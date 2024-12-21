@@ -12,13 +12,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        
-      - name: Execute script on server via SSH using password
-        uses: appleboy/ssh-action@v0.1.5
-        with:
-          host: ${{ secrets.HOSTNAME }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: 22
-          script: |
-            bash -c "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox_install.sh)" -- 9999
+
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass || echo "sshpass already installed"
+
+      - name: SSH into server and run script
+        run: |
+          sshpass -p "${{ secrets.PASSWORD }}" ssh -v -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }} << 'EOF'
+            set -e  # 如果出现任何错误，脚本会停止执行
+            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox_install.sh -o singbox_install.sh || { echo 'Script download failed'; exit 1; }
+            bash singbox_install.sh -- 9999 || { echo 'Script execution failed'; exit 1; }
+          EOF
