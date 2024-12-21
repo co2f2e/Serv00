@@ -1,8 +1,10 @@
 <h1 align="center">
   Hysteria2协议SingBox快速安装
 </h1>
-
-* 快速安装，命令后面参数修改为面板已添加的一个UDP端口
+# 注意
+* 首先进行面板设置，添加一个UDP端口
+# 安装
+* 命令后面参数修改为面板已添加的一个UDP端口
 ```bash
 bash -c "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox_install.sh)" -- 9999
 ```
