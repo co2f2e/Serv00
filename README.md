@@ -1,5 +1,5 @@
 <h1 align="center">
-  Serv00|CT8一键hy2协议快速安装脚本
+  Serv00|CT8一键hy2协议快速安装
 </h1>
 
 ## 注意
