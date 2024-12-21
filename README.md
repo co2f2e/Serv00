@@ -1,5 +1,5 @@
 <h1 align="center">
-  Hysteria2协议SingBox快速安装
+  Serv00|CT8一键hy2协议快速安装脚本
 </h1>
 
 ## 注意
