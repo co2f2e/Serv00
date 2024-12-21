@@ -31,7 +31,7 @@ ps aux | grep $(whoami) | grep -v "sshd\|bash\|grep" | awk '{print $2}' | xargs 
 install_singbox() { 
 clear
 echo -e "${yellow}原脚本地址：${re}${purple}https://github.com/eooce/Sing-box${re}"
-echo -e "${yellow}本脚本为修改版，只有hysteria2协议，开始运行前，请确保在面板${purple}已开放1个udp端口${re}"
+echo -e "${yellow}此脚本为修改版，只有hysteria2协议，开始运行前，请确保在面板${purple}已开放1个udp端口${re}"
 echo -e "${yellow}面板${purple}Additional services中的Run your own applications${yellow}已开启为${purple}Enabled${yellow}状态${re}"
         cd $WORKDIR
         download_and_run_singbox
@@ -319,4 +319,3 @@ rm -rf config.json sb.log core fake_useragent_0.2.0.json
 }
 
 install_singbox
-exit 0
