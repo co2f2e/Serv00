@@ -22,7 +22,7 @@ jobs:
             set -e 
             export UDPPORT="${{ secrets.UDPPORT }}"
             curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox_install.sh -o singbox_install.sh || { echo 'Script download failed'; exit 1; }
-            bash singbox_install.sh -- "\$UDPPORT" || { echo 'Script execution failed'; exit 1; }
+            bash singbox_install.sh -- "$UDPPORT" || { echo 'Script execution failed'; exit 1; }
             if [ $? -eq 0 ]; then
               echo "Script executed successfully."
             else
