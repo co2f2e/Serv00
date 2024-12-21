@@ -9,23 +9,47 @@ jobs:
   keep_serv00:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        server: [1, 2, 3]  # 使用数字来代表每个服务器
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Set server variables
+        id: set_vars
+        run: |
+          if [ "${{ matrix.server }}" == "1" ]; then
+            echo "SERVER_USERNAME=${{ secrets.SERVER1_USERNAME }}" >> $GITHUB_ENV
+            echo "SERVER_HOSTNAME=${{ secrets.SERVER1_HOSTNAME }}" >> $GITHUB_ENV
+            echo "SERVER_PASSWORD=${{ secrets.SERVER1_PASSWORD }}" >> $GITHUB_ENV
+            echo "UDPPORT=${{ secrets.SERVER1_UDPPORT }}" >> $GITHUB_ENV
+          elif [ "${{ matrix.server }}" == "2" ]; then
+            echo "SERVER_USERNAME=${{ secrets.SERVER2_USERNAME }}" >> $GITHUB_ENV
+            echo "SERVER_HOSTNAME=${{ secrets.SERVER2_HOSTNAME }}" >> $GITHUB_ENV
+            echo "SERVER_PASSWORD=${{ secrets.SERVER2_PASSWORD }}" >> $GITHUB_ENV
+            echo "UDPPORT=${{ secrets.SERVER2_UDPPORT }}" >> $GITHUB_ENV
+          elif [ "${{ matrix.server }}" == "3" ]; then
+            echo "SERVER_USERNAME=${{ secrets.SERVER3_USERNAME }}" >> $GITHUB_ENV
+            echo "SERVER_HOSTNAME=${{ secrets.SERVER3_HOSTNAME }}" >> $GITHUB_ENV
+            echo "SERVER_PASSWORD=${{ secrets.SERVER3_PASSWORD }}" >> $GITHUB_ENV
+            echo "UDPPORT=${{ secrets.SERVER3_UDPPORT }}" >> $GITHUB_ENV
+          fi
 
       - name: Install sshpass
         run: sudo apt-get install -y sshpass || echo "sshpass already installed"
 
       - name: SSH into server and run script
         run: |
-          sshpass -p "${{ secrets.PASSWORD }}" ssh -v -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }} << EOF
+          sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -v -o StrictHostKeyChecking=no ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOSTNAME }} << EOF
             set -e 
             curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox_install.sh -o singbox_install.sh || { echo 'Script download failed'; exit 1; }
-            bash singbox_install.sh "${{ secrets.UDPPORT }}" || { echo 'Script execution failed'; exit 1; }
+            bash singbox_install.sh "${{ env.UDPPORT }}" || { echo 'Script execution failed'; exit 1; }
             if [ $? -eq 0 ]; then
-              echo "＝＝＝＝＝＝＝＝Script executed successfully.＝＝＝＝＝＝＝＝"
+              echo "＝＝＝＝＝＝＝＝Script executed successfully on ${{ env.SERVER_HOSTNAME }}.＝＝＝＝＝＝＝＝"
             else
-              echo "－－－－－－－－Script execution failed.－－－－－－－－"
+              echo "－－－－－－－－Script execution failed on ${{ env.SERVER_HOSTNAME }}.－－－－－－－－"
               exit 1
             fi
           EOF
