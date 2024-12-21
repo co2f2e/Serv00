@@ -262,30 +262,17 @@ EOF
 
 if [ -e "$(basename ${FILE_MAP[web]})" ]; then
     nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 &
-    sleep 2
+    sleep 3
     echo
-MAX_RETRIES=5
-RETRIES=0
-
-while ! pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null; do
-    if [ $RETRIES -ge $MAX_RETRIES ]; then
-        red "$(basename ${FILE_MAP[web]}) failed to start after $MAX_RETRIES retries, exiting..."
-        exit 1
-    fi
-
-    red "$(basename ${FILE_MAP[web]}) is not running, restarting..."
-    pkill -x "$(basename ${FILE_MAP[web]})" || true
-    sleep 2
-    nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 & 
-    RETRIES=$((RETRIES + 1))  
-    sleep 2 
-
-    if pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null; then
-        purple "$(basename ${FILE_MAP[web]}) restarted successfully"
-        exit 0  
-    fi
-done
-green "$(basename ${FILE_MAP[web]}) is already running"
+    pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null && green "$(basename ${FILE_MAP[web]}) is running" || {
+      red "$(basename ${FILE_MAP[web]}) is not running, restarting..."
+      pkill -x "$(basename ${FILE_MAP[web]})" || true
+      echo "Sleeping for 3 seconds after pkill"
+      sleep 3
+      echo "Starting process $(basename ${FILE_MAP[web]})"
+      nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 &
+    purple "$(basename ${FILE_MAP[web]}) restarted"
+}
 fi
 sleep 1
 rm -f "$(basename ${FILE_MAP[npm]})" "$(basename ${FILE_MAP[web]})"
