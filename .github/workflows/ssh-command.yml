@@ -22,3 +22,13 @@ jobs:
         port: 22                         
         script: |
           bash -c "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox_install.sh)" -- ${{ secrets.PORT}}
+          EXIT_CODE=$?
+          echo "Script exited with code: $EXIT_CODE"
+          if [[ $EXIT_CODE -eq 0 ]]; then
+            echo "Installation succeeded on the server."
+          elif [[ $EXIT_CODE -eq 1 ]]; then
+            echo "Installation failed due to reason X."
+          else
+            echo "Unknown error occurred with exit code: $EXIT_CODE"
+          fi
+
