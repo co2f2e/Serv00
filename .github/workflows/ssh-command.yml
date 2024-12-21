@@ -1,0 +1,24 @@
+name: Execute SSH Command
+
+on:
+  schedule:
+    - cron: "0 */5 * * *"
+  workflow_dispatch:
+
+jobs:
+  execute-ssh-command:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Execute command on server
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.HOSTNAME }}     
+        username: ${{ secrets.USERNAME }} 
+        password: ${{ secrets.PASSWORD }} 
+        port: 22                         
+        script: |
+          bash -c "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox_install.sh)" -- 9999
