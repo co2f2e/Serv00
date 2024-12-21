@@ -314,3 +314,4 @@ rm -rf config.json sb.log core fake_useragent_0.2.0.json
 }
 
 install_singbox
+exit 0
