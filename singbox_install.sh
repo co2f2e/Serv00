@@ -277,7 +277,7 @@ while ! pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null; do
     pkill -x "$(basename ${FILE_MAP[web]})" || true  
     nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 & 
     RETRIES=$((RETRIES + 1))  
-    sleep 5 
+    sleep 2 
 
     if pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null; then
         purple "$(basename ${FILE_MAP[web]}) restarted successfully"
