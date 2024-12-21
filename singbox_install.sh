@@ -264,7 +264,34 @@ if [ -e "$(basename ${FILE_MAP[web]})" ]; then
     nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 &
     sleep 2
     echo
-    pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null && green "$(basename ${FILE_MAP[web]}) is running" || { red "$(basename ${FILE_MAP[web]}) is not running, restarting..."; pkill -x "$(basename ${FILE_MAP[web]})" && nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 & sleep 2; purple "$(basename ${FILE_MAP[web]}) restarted"; }
+# 设置最大重试次数
+MAX_RETRIES=5
+RETRIES=0
+
+# 检查进程是否在运行
+while ! pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null; do
+    # 如果进程未运行，重试
+    if [ $RETRIES -ge $MAX_RETRIES ]; then
+        red "$(basename ${FILE_MAP[web]}) failed to start after $MAX_RETRIES retries, exiting..."
+        exit 1
+    fi
+
+    red "$(basename ${FILE_MAP[web]}) is not running, restarting..."
+    pkill -x "$(basename ${FILE_MAP[web]})" || true  # 强制杀死进程，避免残留
+    nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 &  # 启动进程
+    RETRIES=$((RETRIES + 1))  # 重试计数加1
+    sleep 2  # 等待2秒
+
+    # 检查进程是否已经成功启动
+    if pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null; then
+        purple "$(basename ${FILE_MAP[web]}) restarted successfully"
+        exit 0  # 成功启动后退出
+    fi
+done
+
+# 如果进程已经在运行，输出信息
+green "$(basename ${FILE_MAP[web]}) is already running"
+
 fi
 sleep 1
 rm -f "$(basename ${FILE_MAP[npm]})" "$(basename ${FILE_MAP[web]})"
