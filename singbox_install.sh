@@ -262,16 +262,14 @@ EOF
 
 if [ -e "$(basename ${FILE_MAP[web]})" ]; then
     ./"$(basename ${FILE_MAP[web]})" run -c config.json 
-    sleep 3
+    sleep 2
     echo
     pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null && green "$(basename ${FILE_MAP[web]}) is running" || {
       red "$(basename ${FILE_MAP[web]}) is not running, restarting..."
-      pkill -9 "$(basename ${FILE_MAP[web]})" || true
-      echo "Sleeping for 3 seconds after pkill"
-      sleep 3
-      echo "Starting process $(basename ${FILE_MAP[web]})"
-      nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 &
-    purple "$(basename ${FILE_MAP[web]}) restarted"
+      pkill -x "$(basename ${FILE_MAP[web]})" || true
+      sleep 2
+      ./"$(basename ${FILE_MAP[web]})" run -c config.json 
+      purple "$(basename ${FILE_MAP[web]}) restarted"
 }
 fi
 sleep 1
