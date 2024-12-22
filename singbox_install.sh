@@ -300,6 +300,11 @@ if [[ "$(get_ip)" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     IP=$(get_ip)
 else
     IP=$(host "$(get_ip)" | grep "has address" | awk '{print $4}')
+    if [ -n "$IP" ]; then
+        echo "Resolved IP: $IP"
+    else
+        echo "Error: Unable to resolve domain."
+    fi
 fi
 
 get_links(){
