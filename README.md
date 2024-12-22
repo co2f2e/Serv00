@@ -25,22 +25,23 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/node_info.s
 ```bash
         server: [1, 2, 3]  # 使用数字来代表每个serv00
 ```
+UDPPORT修改成对应的serv00的UDP端口，根据serv00个数修改代码
 ```bash
-          if [ "${{ matrix.server }}" == "1" ]; then  # 第一个serv00获取仓库机密
+         if [ "${{ matrix.server }}" == "1" ]; then
             echo "SERVER_USERNAME=${{ secrets.SERVER1_USERNAME }}" >> $GITHUB_ENV
             echo "SERVER_HOSTNAME=${{ secrets.SERVER1_HOSTNAME }}" >> $GITHUB_ENV
             echo "SERVER_PASSWORD=${{ secrets.SERVER1_PASSWORD }}" >> $GITHUB_ENV
-            echo "UDPPORT=${{ secrets.SERVER1_UDPPORT }}" >> $GITHUB_ENV
-          elif [ "${{ matrix.server }}" == "2" ]; then  # 第二个serv00获取仓库机密
+            echo "UDPPORT=15370" >> $GITHUB_ENV
+          elif [ "${{ matrix.server }}" == "2" ]; then
             echo "SERVER_USERNAME=${{ secrets.SERVER2_USERNAME }}" >> $GITHUB_ENV
             echo "SERVER_HOSTNAME=${{ secrets.SERVER2_HOSTNAME }}" >> $GITHUB_ENV
             echo "SERVER_PASSWORD=${{ secrets.SERVER2_PASSWORD }}" >> $GITHUB_ENV
-            echo "UDPPORT=${{ secrets.SERVER2_UDPPORT }}" >> $GITHUB_ENV
-          elif [ "${{ matrix.server }}" == "3" ]; then  # 第三个serv00获取仓库机密
+            echo "UDPPORT=23567" >> $GITHUB_ENV
+          elif [ "${{ matrix.server }}" == "3" ]; then
             echo "SERVER_USERNAME=${{ secrets.SERVER3_USERNAME }}" >> $GITHUB_ENV
             echo "SERVER_HOSTNAME=${{ secrets.SERVER3_HOSTNAME }}" >> $GITHUB_ENV
             echo "SERVER_PASSWORD=${{ secrets.SERVER3_PASSWORD }}" >> $GITHUB_ENV
-            echo "UDPPORT=${{ secrets.SERVER3_UDPPORT }}" >> $GITHUB_ENV
+            echo "UDPPORT=47233" >> $GITHUB_ENV
           fi
 ```
 
