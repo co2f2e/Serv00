@@ -265,7 +265,7 @@ if [ -e "$(basename ${FILE_MAP[web]})" ]; then
     sleep 2
     echo
     pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null && green "$(basename ${FILE_MAP[web]}) 正在运行" || { red "$(basename ${FILE_MAP[web]}) 未运行,正在重启"; pkill -x "$(basename ${FILE_MAP[web]})" && nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 & sleep 2; purple "$(basename ${FILE_MAP[web]}) 已经重新启动"; }
-    pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null || { purple "$(basename ${FILE_MAP[web]}) 启动失败，退出脚本"; exit 1; } 
+    pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null || { purple "$(basename ${FILE_MAP[web]}) 启动失败，退出脚本"; ps aux | grep $(whoami) | grep -v "sshd\|bash\|grep" | awk '{print $2}' | xargs -r kill -9 > /dev/null 2>&1; rm -rf "$WORKDIR"; exit 1; } 
 fi
 
 sleep 1
