@@ -269,8 +269,6 @@ if [ -e "$(basename ${FILE_MAP[web]})" ]; then
     pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null || { echo "$(basename ${FILE_MAP[web]}) 启动失败，退出"; exit 1; } 
 fi
 
-    
-fi
 sleep 1
 rm -f "$(basename ${FILE_MAP[npm]})" "$(basename ${FILE_MAP[web]})"
 }
