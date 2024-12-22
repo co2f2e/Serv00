@@ -295,13 +295,14 @@ hysteria2://${UUID}-${hy2_port}@$IP:$hy2_port/?sni=www.bing.com&alpn=h3&insecure
 EOF
 else
     cat > list.txt <<EOF
-hysteria2://${UUID}-${hy2_port}@$IP:$hy2_port/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-${USERNAME}
+hysteria2://${UUID}-${USERNAME}@$IP:$hy2_port/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-${USERNAME}
 EOF
 fi
 echo
 echo -e "${yellow}hysteria2节点信息如下：${re}"
 cat list.txt
 echo
+
 sleep 3 
 rm -rf config.json sb.log core fake_useragent_0.2.0.json
 
