@@ -299,11 +299,11 @@ get_ip() {
 if [[ "$(get_ip)" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     IP=$(get_ip)
 else
-    IP=$(host "$(get_ip)" | grep "has address" | awk '{print $4}')
-    if [ -n "$IP" ]; then
-        echo "Resolved IP: $IP"
+    resolved_ip=$(host "$(get_ip)" | grep "has address" | awk '{print $4}')
+    if [[ "$resolved_ip" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+      IP="$resolved_ip"
     else
-        echo "Error: Unable to resolve domain."
+      exit 1
     fi
 fi
 
