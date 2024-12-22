@@ -279,7 +279,7 @@ rm -f "$(basename ${FILE_MAP[npm]})" "$(basename ${FILE_MAP[web]})"
 get_ip() {
   ip=$(curl -s --max-time 1.5 ipv4.ip.sb)
   if [ -z "$ip" ]; then
-    ip=$( [[ "$HOSTNAME" =~ ^s([0-9]|[1-2][0-9]|30)\.serv00\.com$ ]] && echo "s${BASH_REMATCH[1]}.serv00.com" || echo "$HOSTNAME" )
+    ip=$( [[ "$HOSTNAME" =~ ^s([0-9]|[1-2][0-9]|30)\.serv00\.com$ ]] && echo "s${BASH_REMATCH[1]}.serv00.com" || echo "$ip" )
   else
     url="https://www.toolsdaquan.com/toolapi/public/ipchecking/$ip/443"
     response=$(curl -s --location --max-time 3 --request GET "$url" --header 'Referer: https://www.toolsdaquan.com/ipcheck')
@@ -297,7 +297,7 @@ get_ip() {
 if [[ "$(get_ip)" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     IP=$(get_ip)
 else
-    resolved_ip=$(host "$(get_ip)" | grep "has address" | awk '{print $4}')
+    resolved_ip=$(timeout 3s host "$(get_ip)" | grep "has address" | awk '{print $4}')
     if [[ "$resolved_ip" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
       IP="$resolved_ip"
     else
