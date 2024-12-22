@@ -47,9 +47,13 @@ jobs:
             curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox_install.sh -o singbox_install.sh || { echo 'Script download failed'; exit 1; }
             bash singbox_install.sh "${{ env.UDPPORT }}" || { echo 'Script execution failed'; exit 1; }
             if [ $? -eq 0 ]; then
-              echo "＝＝＝＝＝＝＝＝Script executed successfully on ${{ env.SERVER_HOSTNAME }}.＝＝＝＝＝＝＝＝"
+              echo
+              echo "Success!!!"
+              echo
             else
-              echo "－－－－－－－－Script execution failed on ${{ env.SERVER_HOSTNAME }}.－－－－－－－－"
+              ehco
+              echo "Failure!!!"
+              echo
               exit 1
             fi
           EOF
