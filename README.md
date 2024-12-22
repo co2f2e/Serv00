@@ -17,8 +17,8 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/node_info.s
 ## 保活
 * 通过Actions每过5小时运行一次脚本
 * 创建一个Actions，根据需要保活的serv00个数添加不同数量的仓库机密
-* 1个serv00需要添加4个：`SERVER1_HOSTNAME`、`SERVER1_USERNAME`、`SERVER1_PASSWORD`、`SERVER1_UDPPORT`
-* 2个serv00需要添加8个：`SERVER1_HOSTNAME`、`SERVER1_USERNAME`、`SERVER1_PASSWORD`、`SERVER1_UDPPORT`，`SERVER2_HOSTNAME`、`SERVER2_USERNAME`、`SERVER2_PASSWORD`、`SERVER2_UDPPORT`
+* 1个serv00需要添加3个：`SERVER1_HOSTNAME`、`SERVER1_USERNAME`、`SERVER1_PASSWORD`
+* 2个serv00需要添加6个：`SERVER1_HOSTNAME`、`SERVER1_USERNAME`、`SERVER1_PASSWORD`，`SERVER2_HOSTNAME`、`SERVER2_USERNAME`、`SERVER2_PASSWORD`
 * 3个及三个以上serv00则以此类推
 * 节点的地址可能会变改变，导致原来的节点不通，具体地址根据Actions日志中的信息为准
 * 复制`keep_serv00.yml`代码，根据serv00数量修改`keep_serv00.yml`中的代码
