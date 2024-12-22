@@ -18,4 +18,4 @@ yellow "节点信息："
 echo
 cat $WORKDIR/list.txt
 echo
-cat $WORKDIR/singbox.log
+
