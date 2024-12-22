@@ -21,20 +21,20 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/node_info.s
 * 3个及三个以上serv00则以此类推
 * 根据serv00数量修改`keep_serv00.yml`中的代码
 ```bash
-        server: [1, 2, 3]  # 使用数字来代表每个服务器
+        server: [1, 2, 3]  # 使用数字来代表每个serv00
 ```
 ```bash
-          if [ "${{ matrix.server }}" == "1" ]; then  # 第一个服务器仓库机密获取
+          if [ "${{ matrix.server }}" == "1" ]; then  # 第一个serv00获取仓库机密
             echo "SERVER_USERNAME=${{ secrets.SERVER1_USERNAME }}" >> $GITHUB_ENV
             echo "SERVER_HOSTNAME=${{ secrets.SERVER1_HOSTNAME }}" >> $GITHUB_ENV
             echo "SERVER_PASSWORD=${{ secrets.SERVER1_PASSWORD }}" >> $GITHUB_ENV
             echo "UDPPORT=${{ secrets.SERVER1_UDPPORT }}" >> $GITHUB_ENV
-          elif [ "${{ matrix.server }}" == "2" ]; then  # 第一个服务器仓库机密获取
+          elif [ "${{ matrix.server }}" == "2" ]; then  # 第二个serv00获取仓库机密
             echo "SERVER_USERNAME=${{ secrets.SERVER2_USERNAME }}" >> $GITHUB_ENV
             echo "SERVER_HOSTNAME=${{ secrets.SERVER2_HOSTNAME }}" >> $GITHUB_ENV
             echo "SERVER_PASSWORD=${{ secrets.SERVER2_PASSWORD }}" >> $GITHUB_ENV
             echo "UDPPORT=${{ secrets.SERVER2_UDPPORT }}" >> $GITHUB_ENV
-          elif [ "${{ matrix.server }}" == "3" ]; then  # 第一个服务器仓库机密获取
+          elif [ "${{ matrix.server }}" == "3" ]; then  # 第三个serv00获取仓库机密
             echo "SERVER_USERNAME=${{ secrets.SERVER3_USERNAME }}" >> $GITHUB_ENV
             echo "SERVER_HOSTNAME=${{ secrets.SERVER3_HOSTNAME }}" >> $GITHUB_ENV
             echo "SERVER_PASSWORD=${{ secrets.SERVER3_PASSWORD }}" >> $GITHUB_ENV
