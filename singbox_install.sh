@@ -301,6 +301,7 @@ fi
 echo
 echo -e "${yellow}hysteria2节点信息如下：${re}"
 cat list.txt
+echo
 sleep 3 
 rm -rf config.json sb.log core fake_useragent_0.2.0.json
 
