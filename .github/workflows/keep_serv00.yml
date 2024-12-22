@@ -48,11 +48,11 @@ jobs:
             bash singbox_install.sh "${{ env.UDPPORT }}" || { echo 'Script execution failed'; exit 1; }
             if [ $? -eq 0 ]; then
               echo
-              echo "Success!!!"
+              echo -e "\033[32mSuccess!!!\033[0m"
               echo
             else
               ehco
-              echo "Failure!!!"
+              echo -e "\033[31mFailure!!!\033[0m"
               echo
               exit 1
             fi
