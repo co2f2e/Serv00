@@ -265,8 +265,7 @@ if [ -e "$(basename ${FILE_MAP[web]})" ]; then
     sleep 2
     echo
     pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null && green "$(basename ${FILE_MAP[web]}) 正在运行" || { red "$(basename ${FILE_MAP[web]}) 未运行,正在重启"; pkill -x "$(basename ${FILE_MAP[web]})" && nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 & sleep 2; purple "$(basename ${FILE_MAP[web]}) 已经重新启动"; }
-    echo
-    pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null || { echo "$(basename ${FILE_MAP[web]}) 启动失败，退出"; exit 1; } 
+    pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null || { purple "$(basename ${FILE_MAP[web]}) 启动失败，退出脚本"; exit 1; } 
 fi
 
 sleep 1
@@ -301,10 +300,7 @@ EOF
 fi
 echo
 echo -e "${yellow}hysteria2节点信息如下：${re}"
-echo
 cat list.txt
-echo
-purple "\n$WORKDIR/list.txt saved successfully"
 sleep 3 
 rm -rf config.json sb.log core fake_useragent_0.2.0.json
 
