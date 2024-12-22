@@ -24,17 +24,17 @@ jobs:
             echo "SERVER_USERNAME=${{ secrets.SERVER1_USERNAME }}" >> $GITHUB_ENV
             echo "SERVER_HOSTNAME=${{ secrets.SERVER1_HOSTNAME }}" >> $GITHUB_ENV
             echo "SERVER_PASSWORD=${{ secrets.SERVER1_PASSWORD }}" >> $GITHUB_ENV
-            echo "UDPPORT=${{ secrets.SERVER1_UDPPORT }}" >> $GITHUB_ENV
+            echo "UDPPORT=15370" >> $GITHUB_ENV
           elif [ "${{ matrix.server }}" == "2" ]; then
             echo "SERVER_USERNAME=${{ secrets.SERVER2_USERNAME }}" >> $GITHUB_ENV
             echo "SERVER_HOSTNAME=${{ secrets.SERVER2_HOSTNAME }}" >> $GITHUB_ENV
             echo "SERVER_PASSWORD=${{ secrets.SERVER2_PASSWORD }}" >> $GITHUB_ENV
-            echo "UDPPORT=${{ secrets.SERVER2_UDPPORT }}" >> $GITHUB_ENV
+            echo "UDPPORT=23567" >> $GITHUB_ENV
           elif [ "${{ matrix.server }}" == "3" ]; then
             echo "SERVER_USERNAME=${{ secrets.SERVER3_USERNAME }}" >> $GITHUB_ENV
             echo "SERVER_HOSTNAME=${{ secrets.SERVER3_HOSTNAME }}" >> $GITHUB_ENV
             echo "SERVER_PASSWORD=${{ secrets.SERVER3_PASSWORD }}" >> $GITHUB_ENV
-            echo "UDPPORT=${{ secrets.SERVER3_UDPPORT }}" >> $GITHUB_ENV
+            echo "UDPPORT=47233" >> $GITHUB_ENV
           fi
 
       - name: Install sshpass
