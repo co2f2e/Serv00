@@ -279,7 +279,7 @@ rm -f "$(basename ${FILE_MAP[npm]})" "$(basename ${FILE_MAP[web]})"
 get_ip() {
   ip=$(curl -s --max-time 1.5 ipv4.ip.sb)
   if [ -z "$ip" ]; then
-    ip=$( [[ "$HOSTNAME" =~ ^s([0-9]|[1-2][0-9]|30)\.serv00\.com$ ]] && echo "s${BASH_REMATCH[1]}.serv00.com" || echo "$ip" )
+    ip=$( [[ "$HOSTNAME" =~ ^s([0-9]|[1-2][0-9]|30)\.serv00\.com$ ]] && echo "s${BASH_REMATCH[1]}.serv00.com" || echo "$HOSTNAME" )
   else
     url="https://www.toolsdaquan.com/toolapi/public/ipchecking/$ip/443"
     response=$(curl -s --location --max-time 3 --request GET "$url" --header 'Referer: https://www.toolsdaquan.com/ipcheck')
