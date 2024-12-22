@@ -14,6 +14,8 @@ bash -c "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox
 ```bash
 bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/node_info.sh)
 ```
+## 保活
+* 根据你需要保活的serv00服务器个数添加仓库机密：`SERVER1_HOSTNAME`、`SERVER1_USERNAME`、`SERVER1_PASSWORD`、`SERVER1_UDPPORT`，数字根据服务器个数变化
 
 
 
