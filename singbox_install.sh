@@ -291,7 +291,7 @@ get_name() { if [ "$HOSTNAME" = "s1.ct8.pl" ]; then SERVER="CT8"; else SERVER=$(
 NAME="$ISP-$(get_name)"
 if [[ "$HOSTNAME" == "s1.ct8.pl" ]]; then
     cat > list.txt <<EOF
-hysteria2://${UUID}-${USERNAME}@$IP:$hy2_port/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-${USERNAME}
+hysteria2://${UUID}-${USERNAME}@$IP:$hy2_port/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-${HOSTNAME}
 EOF
 else
     cat > list.txt <<EOF
