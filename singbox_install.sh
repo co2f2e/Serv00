@@ -151,7 +151,7 @@ openssl req -new -x509 -days 3650 -key "private.key" -out "cert.pem" -subj "/CN=
        "listen_port": $hy2_port,
        "users": [
          {
-             "password": "${UUID}-${hy2_port}"
+             "password": "${UUID}-${USERNAME}"
          }
      ],
      "masquerade": "https://bing.com",
@@ -291,7 +291,7 @@ get_name() { if [ "$HOSTNAME" = "s1.ct8.pl" ]; then SERVER="CT8"; else SERVER=$(
 NAME="$ISP-$(get_name)"
 if [[ "$HOSTNAME" == "s1.ct8.pl" ]]; then
     cat > list.txt <<EOF
-hysteria2://${UUID}-${hy2_port}@$IP:$hy2_port/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-${HOSTNAME}
+hysteria2://${UUID}-${USERNAME}@$IP:$hy2_port/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-${USERNAME}
 EOF
 else
     cat > list.txt <<EOF
