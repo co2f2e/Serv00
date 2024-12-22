@@ -297,12 +297,7 @@ get_ip() {
 if [[ "$(get_ip)" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     IP=$(get_ip)
 else
-    resolved_ip=$(timeout 3s host "$(get_ip)" | grep "has address" | awk '{print $4}')
-    if [[ "$resolved_ip" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-      IP="$resolved_ip"
-    else
-      exit 1
-    fi
+    IP=$(host "$(get_ip)" | grep "has address" | awk '{print $4}')
 fi
 
 get_links(){
