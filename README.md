@@ -14,8 +14,8 @@ bash -c "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox
 ```bash
 bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/node_info.sh)
 ```
-## 保活(非必要)
-* 每过5小时运行一次脚本
+## 保活
+* 通过Actions每过5小时运行一次脚本
 * 创建一个Actions，根据需要保活的serv00个数添加不同数量的仓库机密
 * 1个serv00需要添加4个：`SERVER1_HOSTNAME`、`SERVER1_USERNAME`、`SERVER1_PASSWORD`、`SERVER1_UDPPORT`
 * 2个serv00需要添加8个：`SERVER1_HOSTNAME`、`SERVER1_USERNAME`、`SERVER1_PASSWORD`、`SERVER1_UDPPORT`，`SERVER2_HOSTNAME`、`SERVER2_USERNAME`、`SERVER2_PASSWORD`、`SERVER2_UDPPORT`
