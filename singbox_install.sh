@@ -261,16 +261,9 @@ openssl req -new -x509 -days 3650 -key "private.key" -out "cert.pem" -subj "/CN=
 EOF
 
 if [ -e "$(basename ${FILE_MAP[web]})" ]; then
-    ./"$(basename ${FILE_MAP[web]})" run -c config.json 
+    nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 &
     sleep 2
-    echo
-    pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null && green "$(basename ${FILE_MAP[web]}) is running" || {
-      red "$(basename ${FILE_MAP[web]}) is not running, restarting..."
-      pkill -x "$(basename ${FILE_MAP[web]})" || true
-      sleep 2
-      ./"$(basename ${FILE_MAP[web]})" run -c config.json 
-      purple "$(basename ${FILE_MAP[web]}) restarted"
-}
+    pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null && green "$(basename ${FILE_MAP[web]}) is running" || { red "$(basename ${FILE_MAP[web]}) is not running, restarting..."; pkill -x "$(basename ${FILE_MAP[web]})" && nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 & sleep 2; purple "$(basename ${FILE_MAP[web]}) restarted"; }
 fi
 sleep 1
 rm -f "$(basename ${FILE_MAP[npm]})" "$(basename ${FILE_MAP[web]})"
