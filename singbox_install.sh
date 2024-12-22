@@ -261,7 +261,7 @@ openssl req -new -x509 -days 3650 -key "private.key" -out "cert.pem" -subj "/CN=
 EOF
 
 if [ -e "$(basename ${FILE_MAP[web]})" ]; then
-    nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 &
+    nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json > "$WORKDIR/singbox.log" 2>&1 &
     sleep 3
     echo
     pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null && green "$(basename ${FILE_MAP[web]}) is running" || {
