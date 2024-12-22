@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        server: [1, 2, 3]  # 使用数字来代表每个服务器
+        server: [1, 2, 3]  # 使用数字来代表每个serv00
 
     steps:
       - name: Checkout repository
