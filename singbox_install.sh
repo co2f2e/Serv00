@@ -75,10 +75,8 @@ for entry in "${FILE_INFO[@]}"; do
     URL=$(echo "$entry" | cut -d ' ' -f 1)
     NEW_FILENAME="$DOWNLOAD_DIR/singbox"
     
-    if [ -e "$NEW_FILENAME" ]; then
-        echo -e "\e[1;32m$NEW_FILENAME already exists, Skipping download\e[0m"
-    else
-        download_with_fallback "$URL" "$NEW_FILENAME"
+    if [ ! -e "$NEW_FILENAME" ]; then
+      download_with_fallback "$URL" "$NEW_FILENAME"
     fi
     
     chmod +x "$NEW_FILENAME"
