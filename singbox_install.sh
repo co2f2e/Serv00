@@ -50,18 +50,10 @@ download_and_run_singbox() {
       exit 1
   fi
 declare -A FILE_MAP
-generate_random_name() {
-    local chars=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
-    local name=""
-    for i in {1..6}; do
-        name="$name${chars:RANDOM%${#chars}:1}"
-    done
-    echo "$name"
-}
 
 download_with_fallback() {
     local URL=$1
-    local NEW_FILENAME=$2
+    local NEW_FILENAME="$DOWNLOAD_DIR/singbox"
 
     curl -L -sS --max-time 2 -o "$NEW_FILENAME" "$URL" &
     CURL_PID=$!
@@ -81,8 +73,7 @@ download_with_fallback() {
 
 for entry in "${FILE_INFO[@]}"; do
     URL=$(echo "$entry" | cut -d ' ' -f 1)
-    RANDOM_NAME=$(generate_random_name)
-    NEW_FILENAME="$DOWNLOAD_DIR/$RANDOM_NAME"
+    NEW_FILENAME="$DOWNLOAD_DIR/singbox"
     
     if [ -e "$NEW_FILENAME" ]; then
         echo -e "\e[1;32m$NEW_FILENAME already exists, Skipping download\e[0m"
