@@ -309,7 +309,7 @@ EOF
 
 chmod +x "check_process.sh"
 
-(crontab -l 2>/dev/null; echo "*/2 * * * * /$WORKDIR/check_process.sh") | crontab -
+(crontab -l 2>/dev/null; echo "*/2 * * * * bash $WORKDIR/check_process.sh") | crontab -
 
 echo -e "${yellow}已添加定时任务每2分钟检测一次该进程，如果不存在则后台启动${re}"
 } 
