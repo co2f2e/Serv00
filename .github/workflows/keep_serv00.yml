@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        server: [1, 2, 3, 4, 5]  
+        server: [1, 2, 3, 4, 5, 6]  
 
     steps:
       - name: Checkout repository
@@ -45,6 +45,11 @@ jobs:
             echo "SERVER_HOSTNAME=${{ secrets.SERVER5_HOSTNAME }}" >> $GITHUB_ENV
             echo "SERVER_PASSWORD=${{ secrets.SERVER5_PASSWORD }}" >> $GITHUB_ENV
             echo "UDPPORT=27173" >> $GITHUB_ENV
+          elif [ "${{ matrix.server }}" == "6" ]; then
+            echo "SERVER_USERNAME=${{ secrets.SERVER6_USERNAME }}" >> $GITHUB_ENV
+            echo "SERVER_HOSTNAME=${{ secrets.SERVER6_HOSTNAME }}" >> $GITHUB_ENV
+            echo "SERVER_PASSWORD=${{ secrets.SERVER6_PASSWORD }}" >> $GITHUB_ENV
+            echo "UDPPORT=32613" >> $GITHUB_ENV
           fi
 
       - name: Install sshpass
