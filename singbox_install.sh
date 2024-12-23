@@ -299,12 +299,12 @@ rm -rf sb.log core fake_useragent_0.2.0.json
 scheduled_task() {
 cat << 'EOF' > "check_process.sh"
 #!/bin/bash
-PROCESS_NAME="singbox"
 USERNAME=$(whoami)
 HOSTNAME=$(hostname)
 [[ "$HOSTNAME" == "s1.ct8.pl" ]] && WORKDIR="domains/${USERNAME}.ct8.pl/logs" || WORKDIR="domains/${USERNAME}.serv00.net/logs"
-if ! pgrep -f "$PROCESS_NAME" > /dev/null; then
-  nohup ./"$WORKDIR"/$PROCESS_NAME" run -c config.json >> "$WORKDIR/$PROCESS_NAME.log" 2>&1 &
+if ! pgrep -f singbox > /dev/null; then
+  cd $WORKDIR
+  nohup ./singbox run -c config.json >/dev/null 2>&1
 fi
 EOF
 
