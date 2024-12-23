@@ -302,6 +302,7 @@ cat << 'EOF' > "check_process.sh"
 #!/bin/bash
 PROCESS_NAME="singbox"
 if ! pgrep -f "$PROCESS_NAME" > /dev/null; then
+  echo "正在重启"
   nohup ./"$PROCESS_NAME" run -c config.json >/dev/null 2>&1
 fi
 EOF
