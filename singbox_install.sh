@@ -293,7 +293,7 @@ cat list.txt
 echo
 
 sleep 3 
-rm -rf config.json sb.log core fake_useragent_0.2.0.json
+rm -rf sb.log core fake_useragent_0.2.0.json
 
 }
 
