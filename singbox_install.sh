@@ -262,7 +262,7 @@ sleep 1
 
 get_ip() {
   ip=$(curl -s --max-time 1.5 ipv4.ip.sb)
-  if [ -z "$ip" ]; then
+  if [ -z "$ip" ] || ! [[ "$ip" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     ip=$( [[ "$HOSTNAME" =~ ^s([0-9]|[1-2][0-9]|30)\.serv00\.com$ ]] && echo "s${BASH_REMATCH[1]}.serv00.com" || echo "$HOSTNAME" )
   fi
   echo "$ip"
@@ -272,6 +272,9 @@ if [[ "$(get_ip)" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
 else
     IP=$(host "$(get_ip)" | grep "has address" | awk '{print $4}')
 fi
+echo
+echo -e "${yellow}$IP${re}"
+echo
 
 get_links(){
 ISP=$(curl -s --max-time 2 https://speed.cloudflare.com/meta | awk -F\" '{print $26}' | sed -e 's/ /_/g' || echo "0")
