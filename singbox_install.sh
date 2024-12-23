@@ -15,8 +15,9 @@ reading() { read -p "$(red "$1")" "$2"; }
 # udp端口
 hy2_port=$1
 
-found=false
+[[ -z "$hy2_port" ]] || ! [[ "$hy2_port" =~ ^[0-9]+$ ]] || (( hy2_port < 1024 || hy2_port > 65535 )) && { echo -e "${yellow}端口为空或端口不在1024~65535范围内${re}"; exit 1; }
 
+found=false
 for port in $(devil port list | grep -i udp | awk '{print $1}' | sort -n); do
     if [[ "$port" == "$hy2_port" ]]; then
         found=true
@@ -24,7 +25,8 @@ for port in $(devil port list | grep -i udp | awk '{print $1}' | sort -n); do
     fi
 done
 
-[[ "$found" == false ]] || [[ -z "$hy2_port" ]] || ! [[ "$hy2_port" =~ ^[0-9]+$ ]] || (( hy2_port < 1024 || hy2_port > 65535 )) && { echo -e "${yellow}端口为空或端口不在添加的端口中或端口不属于1024~65535${re}"; exit 1; }
+[[ "$found" == false ]] && { echo -e "${yellow}端口不在已添加的UDP端口中${re}"; exit 1; }
+
 
 USERNAME=$(whoami)
 HOSTNAME=$(hostname)
