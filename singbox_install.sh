@@ -301,9 +301,11 @@ scheduled_task() {
 cat << 'EOF' > "check_process.sh"
 #!/bin/bash
 PROCESS_NAME="singbox"
+USERNAME=$(whoami)
+HOSTNAME=$(hostname)
+[[ "$HOSTNAME" == "s1.ct8.pl" ]] && WORKDIR="domains/${USERNAME}.ct8.pl/logs" || WORKDIR="domains/${USERNAME}.serv00.net/logs"
 if ! pgrep -f "$PROCESS_NAME" > /dev/null; then
-  echo "正在重启"
-  nohup ./"$PROCESS_NAME" run -c config.json >/dev/null 2>&1
+  nohup ./"$WORKDIR/$PROCESS_NAME" run -c config.json >/dev/null 2>&1
 fi
 EOF
 
