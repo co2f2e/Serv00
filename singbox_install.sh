@@ -297,4 +297,23 @@ rm -rf config.json sb.log core fake_useragent_0.2.0.json
 
 }
 
+scheduled_task() {
+cat << 'EOF' > "$WORKDIR/check_process.sh"
+#!/bin/bash
+PROCESS_NAME="singbox"
+if ! pgrep -f "$PROCESS_NAME" > /dev/null; then
+  nohup ./"$PROCESS_NAME" run -c config.json >/dev/null 2>&1
+fi
+EOF
+
+chmod +x "$WORKDIR/check_process.sh"
+
+(crontab -l 2>/dev/null; echo "*/2 * * * * $WORKDIR/check_process.sh") | crontab -
+
+echo -e "${yellow}The script has been created and added to crontab for execution every 2 minutes.${re}"
+} 
+
 install_singbox
+scheduled_task
+
+
