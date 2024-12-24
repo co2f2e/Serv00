@@ -15,8 +15,7 @@ bash -c "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox
 ```bash
 bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/node_info.sh)
 ```
-## 保活
-* 通过Actions每5小时自动执行一次安装脚本
+
 
 
 
