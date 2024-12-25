@@ -55,6 +55,11 @@ jobs:
             echo "SERVER_HOSTNAME=${{ secrets.SERVER7_HOSTNAME }}" >> $GITHUB_ENV
             echo "SERVER_PASSWORD=${{ secrets.SERVER7_PASSWORD }}" >> $GITHUB_ENV
             echo "UDPPORT=22300" >> $GITHUB_ENV
+          elif [ "${{ matrix.server }}" == "8" ]; then
+            echo "SERVER_USERNAME=${{ secrets.SERVER8_USERNAME }}" >> $GITHUB_ENV
+            echo "SERVER_HOSTNAME=${{ secrets.SERVER8_HOSTNAME }}" >> $GITHUB_ENV
+            echo "SERVER_PASSWORD=${{ secrets.SERVER8_PASSWORD }}" >> $GITHUB_ENV
+            echo "UDPPORT=40428" >> $GITHUB_ENV
           fi
 
       - name: Install sshpass
