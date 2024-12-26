@@ -27,9 +27,13 @@ cronjob="*/2 * * * * bash $WORKDIR/check_process.sh"
 
 check() {
     if pgrep -x "singbox" > /dev/null; then
+        echo -e "${yellow}hysteria2节点信息如下：${re}"
+        cat $WORKDIR/list.txt
         exit 0
     fi
     if crontab -l | grep -qF "$cronjob" && [ -d "$WORKDIR" ]; then
+        echo -e "${yellow}hysteria2节点信息如下：${re}"
+        cat $WORKDIR/list.txt
         exit 0
     fi
 }
