@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        server: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]  
+        server: [1]  
 
     steps:
       - name: Checkout repository
@@ -25,51 +25,6 @@ jobs:
             echo "SERVER_HOSTNAME=${{ secrets.SERVER1_HOSTNAME }}" >> $GITHUB_ENV
             echo "SERVER_PASSWORD=${{ secrets.SERVER1_PASSWORD }}" >> $GITHUB_ENV
             echo "UDPPORT=15370" >> $GITHUB_ENV
-          elif [ "${{ matrix.server }}" == "2" ]; then
-            echo "SERVER_USERNAME=${{ secrets.SERVER2_USERNAME }}" >> $GITHUB_ENV
-            echo "SERVER_HOSTNAME=${{ secrets.SERVER2_HOSTNAME }}" >> $GITHUB_ENV
-            echo "SERVER_PASSWORD=${{ secrets.SERVER2_PASSWORD }}" >> $GITHUB_ENV
-            echo "UDPPORT=23567" >> $GITHUB_ENV
-          elif [ "${{ matrix.server }}" == "3" ]; then
-            echo "SERVER_USERNAME=${{ secrets.SERVER3_USERNAME }}" >> $GITHUB_ENV
-            echo "SERVER_HOSTNAME=${{ secrets.SERVER3_HOSTNAME }}" >> $GITHUB_ENV
-            echo "SERVER_PASSWORD=${{ secrets.SERVER3_PASSWORD }}" >> $GITHUB_ENV
-            echo "UDPPORT=47233" >> $GITHUB_ENV
-          elif [ "${{ matrix.server }}" == "4" ]; then
-            echo "SERVER_USERNAME=${{ secrets.SERVER4_USERNAME }}" >> $GITHUB_ENV
-            echo "SERVER_HOSTNAME=${{ secrets.SERVER4_HOSTNAME }}" >> $GITHUB_ENV
-            echo "SERVER_PASSWORD=${{ secrets.SERVER4_PASSWORD }}" >> $GITHUB_ENV
-            echo "UDPPORT=7212" >> $GITHUB_ENV
-          elif [ "${{ matrix.server }}" == "5" ]; then
-            echo "SERVER_USERNAME=${{ secrets.SERVER5_USERNAME }}" >> $GITHUB_ENV
-            echo "SERVER_HOSTNAME=${{ secrets.SERVER5_HOSTNAME }}" >> $GITHUB_ENV
-            echo "SERVER_PASSWORD=${{ secrets.SERVER5_PASSWORD }}" >> $GITHUB_ENV
-            echo "UDPPORT=27173" >> $GITHUB_ENV
-          elif [ "${{ matrix.server }}" == "6" ]; then
-            echo "SERVER_USERNAME=${{ secrets.SERVER6_USERNAME }}" >> $GITHUB_ENV
-            echo "SERVER_HOSTNAME=${{ secrets.SERVER6_HOSTNAME }}" >> $GITHUB_ENV
-            echo "SERVER_PASSWORD=${{ secrets.SERVER6_PASSWORD }}" >> $GITHUB_ENV
-            echo "UDPPORT=32613" >> $GITHUB_ENV
-          elif [ "${{ matrix.server }}" == "7" ]; then
-            echo "SERVER_USERNAME=${{ secrets.SERVER7_USERNAME }}" >> $GITHUB_ENV
-            echo "SERVER_HOSTNAME=${{ secrets.SERVER7_HOSTNAME }}" >> $GITHUB_ENV
-            echo "SERVER_PASSWORD=${{ secrets.SERVER7_PASSWORD }}" >> $GITHUB_ENV
-            echo "UDPPORT=22300" >> $GITHUB_ENV
-          elif [ "${{ matrix.server }}" == "8" ]; then
-            echo "SERVER_USERNAME=${{ secrets.SERVER8_USERNAME }}" >> $GITHUB_ENV
-            echo "SERVER_HOSTNAME=${{ secrets.SERVER8_HOSTNAME }}" >> $GITHUB_ENV
-            echo "SERVER_PASSWORD=${{ secrets.SERVER8_PASSWORD }}" >> $GITHUB_ENV
-            echo "UDPPORT=40428" >> $GITHUB_ENV
-          elif [ "${{ matrix.server }}" == "9" ]; then
-            echo "SERVER_USERNAME=${{ secrets.SERVER9_USERNAME }}" >> $GITHUB_ENV
-            echo "SERVER_HOSTNAME=${{ secrets.SERVER9_HOSTNAME }}" >> $GITHUB_ENV
-            echo "SERVER_PASSWORD=${{ secrets.SERVER9_PASSWORD }}" >> $GITHUB_ENV
-            echo "UDPPORT=57019" >> $GITHUB_ENV
-          elif [ "${{ matrix.server }}" == "10" ]; then
-            echo "SERVER_USERNAME=${{ secrets.SERVER10_USERNAME }}" >> $GITHUB_ENV
-            echo "SERVER_HOSTNAME=${{ secrets.SERVER10_HOSTNAME }}" >> $GITHUB_ENV
-            echo "SERVER_PASSWORD=${{ secrets.SERVER10_PASSWORD }}" >> $GITHUB_ENV
-            echo "UDPPORT=32938" >> $GITHUB_ENV
           fi
 
       - name: Install sshpass
