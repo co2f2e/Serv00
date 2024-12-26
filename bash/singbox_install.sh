@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# 定义颜色
 re="\033[0m"
 red="\033[1;91m"
 green="\e[1;32m"
@@ -12,29 +11,36 @@ yellow() { echo -e "\e[1;33m$1\033[0m"; }
 purple() { echo -e "\e[1;35m$1\033[0m"; }
 reading() { read -p "$(red "$1")" "$2"; }
 
-# udp端口
 hy2_port=$1
-
-[[ -z "$hy2_port" ]] || ! [[ "$hy2_port" =~ ^[0-9]+$ ]] || (( hy2_port < 1024 || hy2_port > 65535 )) && { echo -e "${yellow}端口为空或端口不在1024~65535范围内${re}"; exit 1; }
-
-found=false
-for port in $(devil port list | grep -i udp | awk '{print $1}' | sort -n); do
-    if [[ "$port" == "$hy2_port" ]]; then
-        found=true
-        break
-    fi
-done
-
-[[ "$found" == false ]] && { echo -e "${yellow}端口不在已添加的UDP端口中${re}"; exit 1; }
-
 
 USERNAME=$(whoami)
 HOSTNAME=$(hostname)
 export UUID=${UUID:-'fc2a78a1-8088-451e-a4cc-3dc10fb5b5ee'}
 
-[[ "$HOSTNAME" == "s1.ct8.pl" ]] && WORKDIR="domains/${USERNAME}.ct8.pl/logs" || WORKDIR="domains/${USERNAME}.serv00.net/logs"
-[ -d "$WORKDIR" ] && rm -rf "$WORKDIR" && mkdir -p "$WORKDIR" && chmod 777 "$WORKDIR" || (mkdir -p "$WORKDIR" && chmod 777 "$WORKDIR")
-ps aux | grep $(whoami) | grep -v "sshd\|bash\|grep" | awk '{print $2}' | xargs -r kill -9 > /dev/null 2>&1
+if [[ "$HOSTNAME" == "s1.ct8.pl" ]]; then
+    WORKDIR="domains/${USERNAME}.ct8.pl/logs"
+else
+    WORKDIR="domains/${USERNAME}.serv00.net/logs"
+fi
+
+cronjob="*/2 * * * * bash $WORKDIR/check_process.sh"
+
+port_validation() {
+    [[ -z "$hy2_port" ]] || ! [[ "$hy2_port" =~ ^[0-9]+$ ]] || (( hy2_port < 1024 || hy2_port > 65535 )) && { echo -e "${yellow}端口为空或端口不在1024~65535范围内${re}"; exit 1; }
+    found=false
+    for port in $(devil port list | grep -i udp | awk '{print $1}' | sort -n); do
+        if [[ "$port" == "$hy2_port" ]]; then
+            found=true
+            break
+        fi
+    done
+    [[ "$found" == false ]] && { echo -e "${yellow}端口不在已添加的UDP端口中${re}"; exit 1; }
+}
+
+preparatory_work() {
+    [ -d "$WORKDIR" ] && rm -rf "$WORKDIR" && mkdir -p "$WORKDIR" && chmod 777 "$WORKDIR" || (mkdir -p "$WORKDIR" && chmod 777 "$WORKDIR")
+    ps aux | grep $(whoami) | grep -v "sshd\|bash\|grep" | awk '{print $2}' | xargs -r kill -9 > /dev/null 2>&1
+}
 
 install_singbox() { 
 clear
@@ -46,7 +52,6 @@ echo -e "${yellow}面板${purple}Additional services中的Run your own applicati
         get_links
 }
 
-# Download Dependency Files
 download_and_run_singbox() {
   ARCH=$(uname -m) && DOWNLOAD_DIR="." && mkdir -p "$DOWNLOAD_DIR" && FILE_INFO=()
   if [ "$ARCH" == "arm" ] || [ "$ARCH" == "arm64" ] || [ "$ARCH" == "aarch64" ]; then
@@ -256,7 +261,6 @@ openssl req -new -x509 -days 3650 -key "private.key" -out "cert.pem" -subj "/CN=
   }
 }
 EOF
-
 if [ -e "$(basename ${FILE_MAP[web]})" ]; then
     nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 &
     sleep 2
@@ -264,7 +268,6 @@ if [ -e "$(basename ${FILE_MAP[web]})" ]; then
     pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null && green "$(basename ${FILE_MAP[web]}) 正在运行" || { red "$(basename ${FILE_MAP[web]}) 未运行,正在重启"; pkill -x "$(basename ${FILE_MAP[web]})" && nohup ./"$(basename ${FILE_MAP[web]})" run -c config.json >/dev/null 2>&1 & sleep 2; purple "$(basename ${FILE_MAP[web]}) 已经重新启动"; }
     pgrep -x "$(basename ${FILE_MAP[web]})" > /dev/null || { purple "$(basename ${FILE_MAP[web]}) 启动失败，退出脚本"; ps aux | grep $(whoami) | grep -v "sshd\|bash\|grep" | awk '{print $2}' | xargs -r kill -9 > /dev/null 2>&1; rm -rf "$WORKDIR"; exit 1; } 
 fi
-
 sleep 1
 }
 
@@ -275,17 +278,14 @@ get_ip() {
     ip=$( [[ "$HOSTNAME" =~ ^s([0-9]|[1-2][0-9]|30)\.serv00\.com$ ]] && echo "s${BASH_REMATCH[1]}.serv00.com" || echo "$HOSTNAME" )
     ip=$(host "$ip" | grep "has address" | awk '{print $4}')
   fi
-  echo "$ip"
+  
+  if [[ "$ip" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+      IP=$ip
+  else
+      ip=$( [[ "$HOSTNAME" =~ ^s([0-9]|[1-2][0-9]|30)\.serv00\.com$ ]] && echo "cache${BASH_REMATCH[1]}.serv00.com" || echo "$HOSTNAME" )
+      IP=$(host "$ip" | grep "has address" | awk '{print $4}')
+  fi
 }
-
-ip_result=$(get_ip)
-
-if [[ "$ip_result" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-  IP=$ip_result
-else
-    ip=$( [[ "$HOSTNAME" =~ ^s([0-9]|[1-2][0-9]|30)\.serv00\.com$ ]] && echo "cache${BASH_REMATCH[1]}.serv00.com" || echo "$HOSTNAME" )
-    IP=$(host "$ip" | grep "has address" | awk '{print $4}')
-fi
 
 get_links(){
 ISP=$(curl -s --max-time 2 https://speed.cloudflare.com/meta | awk -F\" '{print $26}' | sed -e 's/ /_/g' || echo "0")
@@ -323,12 +323,12 @@ fi
 EOF
 
 chmod +x "check_process.sh"
-cronjob="*/2 * * * * bash $WORKDIR/check_process.sh"
 (crontab -l 2>/dev/null | grep -v -F "$cronjob"; echo "$cronjob") | crontab -
 echo -e "${yellow}已添加定时任务每2分钟检测一次该进程，如果不存在则后台启动${re}"
 } 
 
+port_validation "$hy2_port"
+preparatory_work
+get_ip
 install_singbox
 scheduled_task
-
-
