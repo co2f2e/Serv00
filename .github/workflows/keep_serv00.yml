@@ -79,7 +79,7 @@ jobs:
         run: |
           sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOSTNAME }} 2>/dev/null << EOF
             set -e 
-            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/singbox_install.sh -o singbox_install.sh || { echo 'Script download failed'; exit 1; }
+            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/keep_serv00.sh -o singbox_install.sh || { echo 'Script download failed'; exit 1; }
             bash singbox_install.sh "${{ env.UDPPORT }}" || { echo 'Script execution failed'; exit 1; }
             if [ $? -eq 0 ]; then
               echo
