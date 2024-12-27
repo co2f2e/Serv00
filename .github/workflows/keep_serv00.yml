@@ -46,9 +46,9 @@ jobs:
             echo "SERVER_PASSWORD=${{ secrets.SERVER5_PASSWORD }}" >> $GITHUB_ENV
             echo "UDPPORT=23261" >> $GITHUB_ENV
           elif [ "${{ matrix.server }}" == "6" ]; then
-            echo "SERVER_USERNAME=${{ secrets.SERVER5_USERNAME }}" >> $GITHUB_ENV
-            echo "SERVER_HOSTNAME=${{ secrets.SERVER5_HOSTNAME }}" >> $GITHUB_ENV
-            echo "SERVER_PASSWORD=${{ secrets.SERVER5_PASSWORD }}" >> $GITHUB_ENV
+            echo "SERVER_USERNAME=${{ secrets.SERVER6_USERNAME }}" >> $GITHUB_ENV
+            echo "SERVER_HOSTNAME=${{ secrets.SERVER6_HOSTNAME }}" >> $GITHUB_ENV
+            echo "SERVER_PASSWORD=${{ secrets.SERVER6_PASSWORD }}" >> $GITHUB_ENV
             echo "UDPPORT=29223" >> $GITHUB_ENV
           fi
 
