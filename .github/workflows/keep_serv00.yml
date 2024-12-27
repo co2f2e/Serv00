@@ -52,23 +52,18 @@ jobs:
 
       - name: SSH into server and run script
         run: |
-          sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOSTNAME }} 2>/tmp/ssh_error.log || {
-          echo -e "\033[31mSSH connection failed! Please check your SSH credentials or server status.\033[0m"
-          echo -e "\033[31mError details:\033[0m"
-          cat /tmp/ssh_error.log
-          exit 1
-          }  
-
-          curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/keep_serv00.sh -o keep_serv00.sh || { echo 'Script download failed'; exit 1; }
-          bash keep_serv00.sh "${{ env.UDPPORT }}" || { echo 'Script execution failed'; exit 1; }
-
-          if [ $? -eq 0 ]; then
-            echo
-            echo -e "\033[32mSuccess!!!\033[0m"
-            echo
-          else
-            echo
-            echo -e "\033[31mFailure!!!\033[0m"
-            echo
-            exit 1
-          fi
+          sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOSTNAME }} 2>/dev/null << EOF
+            set -e 
+            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/keep_serv00.sh -o keep_serv00.sh || { echo 'Script download failed'; exit 1; }
+            bash keep_serv00.sh "${{ env.UDPPORT }}" || { echo 'Script execution failed'; exit 1; }
+            if [ $? -eq 0 ]; then
+              echo
+              echo -e "\033[32mSuccess!!!\033[0m"
+              echo
+            else
+              echo
+              echo -e "\033[31mFailure!!!\033[0m"
+              echo
+              exit 1
+            fi
+          EOF
