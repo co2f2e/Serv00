@@ -21,6 +21,8 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/node_i
 bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_serv00.sh)
 ```
 
+## 保活
+* 每5个小时检测一下进程是否存在，如果不存在，检测定时任务或singbox文件是否存在，若不存在，则执行重装脚本
 
 
 
