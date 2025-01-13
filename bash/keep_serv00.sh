@@ -28,6 +28,10 @@ cronjob="*/2 * * * * bash $WORKDIR/check_process.sh"
 config_file="$WORKDIR/config.json
 
 check() {
+    if [ ! -f "$config_file" ]; then
+        echo "配置文件不存在: $config_file"
+        return 1
+    fi
     if grep -q "$IP" "$config_file"; then
         if pgrep -x "singbox" > /dev/null; then
             echo -e "${yellow}hysteria2节点信息如下：${re}"
