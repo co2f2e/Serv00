@@ -25,16 +25,20 @@ fi
 
 cronjob="*/2 * * * * bash $WORKDIR/check_process.sh"
 
+config_file="$WORKDIR/config.json
+
 check() {
-    if pgrep -x "singbox" > /dev/null; then
-        echo -e "${yellow}hysteria2节点信息如下：${re}"
-        cat $WORKDIR/list.txt
-        exit 0
-    fi
-    if crontab -l | grep -qF "$cronjob" && [ -d "$WORKDIR" ]; then
-        echo -e "${yellow}hysteria2节点信息如下：${re}"
-        cat $WORKDIR/list.txt
-        exit 0
+    if grep -q "$IP" "$config_file"; then
+        if pgrep -x "singbox" > /dev/null; then
+            echo -e "${yellow}hysteria2节点信息如下：${re}"
+            cat $WORKDIR/list.txt
+            exit 0
+        fi
+        if crontab -l | grep -qF "$cronjob" && [ -d "$WORKDIR" ]; then
+            echo -e "${yellow}hysteria2节点信息如下：${re}"
+            cat $WORKDIR/list.txt
+            exit 0
+        fi
     fi
 }
 
@@ -338,12 +342,12 @@ EOF
 chmod +x "check_process.sh"
 (crontab -l 2>/dev/null | grep -v -F "$cronjob"; echo "$cronjob") | crontab -
 echo -e "${yellow}已添加定时任务每2分钟检测一次该进程，如果不存在则后台启动${re}"
-} 
+}
 
+get_ip
 check
 port_validation "$hy2_port"
 preparatory_work
-get_ip
 install_singbox
 scheduled_task
 
