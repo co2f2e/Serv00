@@ -30,7 +30,7 @@ config_file="$WORKDIR/config.json
 check() {
     if [ ! -f "$config_file" ]; then
         echo "配置文件不存在: $config_file"
-        return 1
+        exit 0
     fi
     if grep -q "$IP" "$config_file"; then
         if pgrep -x "singbox" > /dev/null; then
