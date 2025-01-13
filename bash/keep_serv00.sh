@@ -26,12 +26,10 @@ fi
 cronjob="*/2 * * * * bash $WORKDIR/check_process.sh"
 
 config_file="$WORKDIR/config.json"
-echo "config_file: $config_file"
 
 check() {
     if [ ! -f "$config_file" ]; then
-        echo "配置文件不存在: $config_file"
-        exit 0
+        return 0
     fi
     if grep -q "$IP" "$config_file"; then
         if pgrep -x "singbox" > /dev/null; then
