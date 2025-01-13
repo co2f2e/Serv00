@@ -25,7 +25,7 @@ fi
 
 cronjob="*/2 * * * * bash $WORKDIR/check_process.sh"
 
-config_file="$WORKDIR/config.json
+config_file="$WORKDIR/config.json"
 
 check() {
     if [ ! -f "$config_file" ]; then
