@@ -46,7 +46,7 @@ install_singbox() {
 clear
 echo -e "${yellow}原脚本地址：${re}${purple}https://github.com/eooce/Sing-box${re}"
 echo -e "${yellow}此脚本为修改版，只有hysteria2协议，开始运行前，请确保在面板${purple}已开放1个udp端口${re}"
-echo -e "${yellow}面板${purple}Additional services中的Run your own applications${yellow}已开启为${purple}Enabled${yellow}状态${re}"
+echo -e "${yellow}面板${purple}Additional services中的Run your own applications${yellow}已开启为${purple}启用${yellow}状态${re}"
         cd $WORKDIR
         download_and_run_singbox
         get_links
@@ -272,19 +272,23 @@ sleep 1
 }
 
 get_ip() {
-  ip=$(curl -s --max-time 1.5 ipv4.ip.sb)
-  
-  if [ -z "$ip" ] || ! [[ "$ip" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-    ip=$( [[ "$HOSTNAME" =~ ^s([0-9]|[1-2][0-9]|30)\.serv00\.com$ ]] && echo "s${BASH_REMATCH[1]}.serv00.com" || echo "$HOSTNAME" )
-    ip=$(host "$ip" | grep "has address" | awk '{print $4}')
-  fi
-  
-  if [[ "$ip" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-      IP=$ip
+  IP_LIST=($(devil vhost list | awk '/^[0-9]+/ {print $1}'))
+  API_URL="https://status.eooce.com/api"
+  IP=""
+  THIRD_IP=${IP_LIST[2]}
+  RESPONSE=$(curl -s --max-time 2 "${API_URL}/${THIRD_IP}")
+  if [[ $(echo "$RESPONSE" | jq -r '.status') == "Available" ]]; then
+      IP=$THIRD_IP
   else
-      ip=$( [[ "$HOSTNAME" =~ ^s([0-9]|[1-2][0-9]|30)\.serv00\.com$ ]] && echo "cache${BASH_REMATCH[1]}.serv00.com" || echo "$HOSTNAME" )
-      IP=$(host "$ip" | grep "has address" | awk '{print $4}')
+      FIRST_IP=${IP_LIST[0]}
+      RESPONSE=$(curl -s --max-time 2 "${API_URL}/${FIRST_IP}")
+      if [[ $(echo "$RESPONSE" | jq -r '.status') == "Available" ]]; then
+          IP=$FIRST_IP
+      else
+          IP=${IP_LIST[1]}
+      fi
   fi
+echo "$IP"
 }
 
 get_links(){
