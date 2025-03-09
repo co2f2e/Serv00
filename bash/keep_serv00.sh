@@ -292,19 +292,23 @@ sleep 1
 }
 
 get_ip() {
-  ip=$(curl -s --max-time 1.5 ipv4.ip.sb)
-  
-  if [ -z "$ip" ] || ! [[ "$ip" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-    ip=$( [[ "$HOSTNAME" =~ ^s([0-9]|[1-2][0-9]|30)\.serv00\.com$ ]] && echo "s${BASH_REMATCH[1]}.serv00.com" || echo "$HOSTNAME" )
-    ip=$(host "$ip" | grep "has address" | awk '{print $4}')
-  fi
-  
-  if [[ "$ip" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-      IP=$ip
+  IP_LIST=($(devil vhost list | awk '/^[0-9]+/ {print $1}'))
+  API_URL="https://status.eooce.com/api"
+  IP=""
+  THIRD_IP=${IP_LIST[2]}
+  RESPONSE=$(curl -s --max-time 2 "${API_URL}/${THIRD_IP}")
+  if [[ $(echo "$RESPONSE" | jq -r '.status') == "Available" ]]; then
+      IP=$THIRD_IP
   else
-      ip=$( [[ "$HOSTNAME" =~ ^s([0-9]|[1-2][0-9]|30)\.serv00\.com$ ]] && echo "cache${BASH_REMATCH[1]}.serv00.com" || echo "$HOSTNAME" )
-      IP=$(host "$ip" | grep "has address" | awk '{print $4}')
+      FIRST_IP=${IP_LIST[0]}
+      RESPONSE=$(curl -s --max-time 2 "${API_URL}/${FIRST_IP}")
+      if [[ $(echo "$RESPONSE" | jq -r '.status') == "Available" ]]; then
+          IP=$FIRST_IP
+      else
+          IP=${IP_LIST[1]}
+      fi
   fi
+echo "$IP"
 }
 
 get_links(){
