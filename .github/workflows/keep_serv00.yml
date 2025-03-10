@@ -80,6 +80,7 @@ jobs:
             echo "SERVER_PASSWORD=${{ secrets.SERVER10_PASSWORD }}" >> $GITHUB_ENV
             echo "UUID=${{ secrets.SERVER10_UUID }}" >> $GITHUB_ENV
             echo "UDPPORT=32938" >> $GITHUB_ENV
+          fi
             
       - name: Install sshpass
         run: sudo apt-get install -y sshpass || echo "sshpass already installed"
