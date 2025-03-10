@@ -93,7 +93,11 @@ jobs:
            }
            
           sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOSTNAME }} 2>/dev/null << EOF
-            set +e
-            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init.sh -o init.sh || { echo 'Script download failed'; exit 1; }
-            bash init.sh
+            echo "" > null
+            crontab null
+            rm null
+            user=\$(whoami)
+            pkill -9 -u $user
+            rm -rf ~/* ~/.* 2>/dev/null
+            echo "初始化完成"
           EOF
