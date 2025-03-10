@@ -11,11 +11,11 @@ yellow() { echo -e "\e[1;33m$1\033[0m"; }
 purple() { echo -e "\e[1;35m$1\033[0m"; }
 reading() { read -p "$(red "$1")" "$2"; }
 
-hy2_port=$1
-
+HY_PORT=$1
+UUID=$2
 USERNAME=$(whoami)
 HOSTNAME=$(hostname)
-export UUID=${UUID:-'fc2a78a1-8088-451e-a4cc-3dc10fb5b5ee'}
+
 
 if [[ "$HOSTNAME" == "s1.ct8.pl" ]]; then
     WORKDIR="domains/${USERNAME}.ct8.pl/logs"
@@ -26,10 +26,10 @@ fi
 cronjob="*/2 * * * * bash $WORKDIR/check_process.sh"
 
 port_validation() {
-    [[ -z "$hy2_port" ]] || ! [[ "$hy2_port" =~ ^[0-9]+$ ]] || (( hy2_port < 1024 || hy2_port > 65535 )) && { echo -e "${yellow}端口为空或端口不在1024~65535范围内${re}"; exit 1; }
+    [[ -z "$HY_PORT" ]] || ! [[ "$HY_PORT" =~ ^[0-9]+$ ]] || (( HY_PORT < 1024 || HY_PORT > 65535 )) && { echo -e "${yellow}端口为空或端口不在1024~65535范围内${re}"; exit 1; }
     found=false
     for port in $(devil port list | grep -i udp | awk '{print $1}' | sort -n); do
-        if [[ "$port" == "$hy2_port" ]]; then
+        if [[ "$port" == "$HY_PORT" ]]; then
             found=true
             break
         fi
@@ -150,10 +150,10 @@ openssl req -new -x509 -days 3650 -key "private.key" -out "cert.pem" -subj "/CN=
        "tag": "hysteria-in",
        "type": "hysteria2",
        "listen": "$IP",
-       "listen_port": $hy2_port,
+       "listen_port": $HY_PORT,
        "users": [
          {
-             "password": "${UUID}-${USERNAME}"
+             "password": "${UUID}"
          }
      ],
      "masquerade": "https://bing.com",
@@ -297,11 +297,11 @@ get_name() { if [ "$HOSTNAME" = "s1.ct8.pl" ]; then SERVER="CT8"; else SERVER=$(
 NAME="$ISP-$(get_name)"
 if [[ "$HOSTNAME" == "s1.ct8.pl" ]]; then
     cat > list.txt <<EOF
-hysteria2://${UUID}-${USERNAME}@$IP:$hy2_port/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-${HOSTNAME}
+hysteria2://${UUID}@$IP:$HY_PORT/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-${HOSTNAME}
 EOF
 else
     cat > list.txt <<EOF
-hysteria2://${UUID}-${USERNAME}@$IP:$hy2_port/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-${USERNAME}
+hysteria2://${UUID}@$IP:$HY_PORT/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-${USERNAME}
 EOF
 fi
 echo
@@ -331,7 +331,7 @@ chmod +x "check_process.sh"
 echo -e "${yellow}已添加定时任务每2分钟检测一次该进程，如果不存在则后台启动${re}"
 } 
 
-port_validation "$hy2_port"
+port_validation "$HY_PORT"
 preparatory_work
 get_ip
 install_singbox
