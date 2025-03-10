@@ -12,6 +12,7 @@ purple() { echo -e "\e[1;35m$1\033[0m"; }
 reading() { read -p "$(red "$1")" "$2"; }
 
 HY2_PORT=$1
+echo "HY2_PORT"
 UUID=$2
 
 USERNAME=$(whoami)
