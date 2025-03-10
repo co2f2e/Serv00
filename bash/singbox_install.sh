@@ -288,7 +288,6 @@ get_ip() {
           IP=${IP_LIST[1]}
       fi
   fi
-echo "$IP"
 }
 
 get_links(){
