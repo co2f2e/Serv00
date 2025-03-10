@@ -13,7 +13,6 @@ reading() { read -p "$(red "$1")" "$2"; }
 
 HY2_PORT=$1
 UUID=$2
-echo "$HY2_PORT"
 
 USERNAME=$(whoami)
 HOSTNAME=$(hostname)
@@ -316,7 +315,6 @@ get_ip() {
           IP=${IP_LIST[1]}
       fi
   fi
-echo "$IP"
 }
 
 get_links(){
