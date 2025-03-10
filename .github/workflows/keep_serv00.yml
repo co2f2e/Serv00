@@ -110,5 +110,11 @@ jobs:
             # fi
             set +e
             curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init.sh -o init.sh || { echo 'Script download failed'; exit 1; }
-            bash init.sh 
+            bash init.sh
+            output=$(sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOSTNAME }} 'bash -s' < ./init.sh)
+            if [[ "$output" == *"初始化完成"* ]]; then
+              exit 0
+            else
+              exit 1
+            fi
           EOF
