@@ -7,7 +7,7 @@
 * 执行脚本会给serv00添加定时任务，每两分钟检测一次进程，不存在则重启进程
 
 ## 使用
-* 命令后面参数修改为面板已添加的一个UDP端口,UUID也就是输入一个节点密码
+* 命令后面第一个参数为面板已添加的一个UDP端口,第二个参数为设置一个节点密码
 ```bash
 bash -c "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/singbox_install.sh)" -- 9999 xxxx
 ```
