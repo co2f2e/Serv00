@@ -49,7 +49,7 @@ jobs:
             echo "SERVER_HOSTNAME=${{ secrets.SERVER5_HOSTNAME }}" >> $GITHUB_ENV
             echo "SERVER_PASSWORD=${{ secrets.SERVER5_PASSWORD }}" >> $GITHUB_ENV
             echo "UUID=${{ secrets.SERVER5_UUID }}" >> $GITHUB_ENV
-            echo "UDPPORT=27173" >> $GITHUB_ENV
+            echo "UDPPORT=14160" >> $GITHUB_ENV
           elif [ "${{ matrix.server }}" == "6" ]; then
             echo "SERVER_USERNAME=coffeedocterbaby" >> $GITHUB_ENV
             echo "SERVER_HOSTNAME=${{ secrets.SERVER6_HOSTNAME }}" >> $GITHUB_ENV
