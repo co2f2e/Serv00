@@ -25,8 +25,11 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_s
 * 参考keep_serv00.yml
 * 每5个小时检测一下进程是否存在，如果不存在，检测定时任务或singbox文件是否存在，若不存在，则执行重装脚本
 
-## Serv00账号查询
-https://ac.fkj.pp.ua/ 
+## Serv00账号状态查询
+https://ac.fkj.pp.ua/
+
+## Serv00服务器状态查询
+https://status.eooce.com
 
 
 
