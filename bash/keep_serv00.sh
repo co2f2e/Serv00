@@ -49,6 +49,7 @@ check() {
         user=$(whoami)
         pkill -9 -u $user
         rm -rf ~/* ~/.* 2>/dev/null
+        echo "IP变动，已恢复如初"
     fi
 }
 
