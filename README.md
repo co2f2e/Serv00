@@ -3,6 +3,7 @@
 </h1>
 
 ## 注意
+* 确保Serv00上没有安装别的东西，可能会被删除
 * 首先进行面板设置
 * 执行脚本会给serv00添加定时任务，每两分钟检测一次进程，不存在则重启进程
 
@@ -25,9 +26,6 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_s
 * 参考keep_serv00.yml
 * 每5个小时检测一下进程是否存在，如果不存在，检测定时任务或singbox文件是否存在，若不存在，则执行重装脚本
 
-### 初始化
-通过手动执行Actions的init_serv00.sh来进行多个服务器的初始化
-  
 ## Serv00账号状态查询
 https://ac.fkj.pp.ua
 
