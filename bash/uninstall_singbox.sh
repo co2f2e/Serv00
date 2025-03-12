@@ -15,7 +15,7 @@ HOSTNAME=$(hostname)
 PROCESS_NAME="singbox"
 [[ "$HOSTNAME" == "s1.ct8.pl" ]] && WORKDIR="domains/${USERNAME}.ct8.pl/logs" || WORKDIR="domains/${USERNAME}.serv00.net/logs"
 
-pkill -9 "$PROCESS_NAME"
+pkill -x "$PROCESS_NAME"
 sleep 1
 
 if pgrep "$PROCESS_NAME" > /dev/null; then
