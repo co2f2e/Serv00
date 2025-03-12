@@ -20,7 +20,7 @@ pkill -x "$PROCESS_NAME"
 sleep 1
 
 if pgrep -x "$PROCESS_NAME" > /dev/null; then
-    red "❌ $PROCESS_NAME 卸载失败！"
+    red "❌ $PROCESS_NAME 卸载失败，请重试！"
     exit 0
 else
     echo "" > null
