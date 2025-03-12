@@ -1,10 +1,10 @@
-name: init_serv00
+name: uninstall_singbox
 
 on:
   workflow_dispatch:  # 支持手动执行  
 
 jobs:
-  init_serv00:
+  unistall_singbox:
     runs-on: ubuntu-latest
 
     strategy:
@@ -94,8 +94,8 @@ jobs:
            
           sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOSTNAME }} 2>/dev/null << EOF
             set -e 
-            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init.sh -o init.sh || { echo 'Script download failed'; exit 1; }
-            bash init.sh || { echo 'Script execution failed'; exit 1; }
+            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/uninstall_singbox -o uninstall_singbox || { echo 'Script download failed'; exit 1; }
+            bash uninstall_singbox || { echo 'Script execution failed'; exit 1; }
             if [ $? -eq 0 ]; then
               echo
               echo -e "\033[32mSuccess\033[0m"
