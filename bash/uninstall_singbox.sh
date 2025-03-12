@@ -1,5 +1,6 @@
 #!/bin/bash
 
+RED='\033[31m'
 YELLOW='\033[33m'
 RESET='\033[0m'
 
@@ -18,14 +19,14 @@ PROCESS_NAME="singbox"
 pkill -x "$PROCESS_NAME"
 sleep 1
 
-if pgrep "$PROCESS_NAME" > /dev/null; then
+if pgrep -x "$PROCESS_NAME" > /dev/null; then
     red "❌ $PROCESS_NAME 卸载失败！"
     exit 0
 else
     echo "" > null
     crontab null
     rm null
-    rm -r $WORKDIR
+    [ -d "$WORKDIR" ] && rm -r "$WORKDIR"
     yellow "✅ $PROCESS_NAME 卸载成功，已删除相关文件！"
     exit 0
 fi
