@@ -96,5 +96,4 @@ jobs:
             set -e 
             curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/singbox_uninstall.sh -o singbox_uninstall.sh || { echo 'Script download failed'; exit 1; }
             bash singbox_uninstall.sh || { echo 'Script execution failed'; exit 1; }
-            cat singbox_uninstall.sh
           EOF
