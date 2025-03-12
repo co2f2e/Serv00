@@ -5,7 +5,6 @@
 ## 注意
 * 确保Serv00上没有安装别的东西，可能会被删除
 * 首先进行面板设置
-* 执行脚本会给serv00添加定时任务，每两分钟检测一次进程，不存在则重启进程
 
 ## 使用
 * 命令后面第一个参数为面板已添加的一个UDP端口,第二个参数为设置一个节点密码
@@ -22,9 +21,9 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/node_i
 bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_serv00.sh)
 ```
 
-## 保活
+## 保活&卸载
 * 参考keep_serv00.yml
-* 每5个小时检测一下进程是否存在，如果不存在，检测定时任务或singbox文件是否存在，若不存在，则执行重装脚本
+* 参考singbox_uninstall.yml
 
 ## Serv00账号状态查询
 https://ac.fkj.pp.ua
