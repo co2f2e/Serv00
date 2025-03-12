@@ -302,20 +302,32 @@ get_ip() {
   IP_LIST=($(devil vhost list | awk '/^[0-9]+/ {print $1}'))
   API_URL="https://status.eooce.com/api"
   IP=""
+  MAX_RETRIES=3
   THIRD_IP=${IP_LIST[2]}
-  RESPONSE=$(curl -s --max-time 2 "${API_URL}/${THIRD_IP}")
-  if [[ $(echo "$RESPONSE" | jq -r '.status') == "Available" ]]; then
-      IP=$THIRD_IP
-  else
-      FIRST_IP=${IP_LIST[0]}
+  FIRST_IP=${IP_LIST[0]}
+
+  for ((RETRIES=0; RETRIES<$MAX_RETRIES; RETRIES++)); do
+      RESPONSE=$(curl -s --max-time 2 "${API_URL}/${THIRD_IP}")
+      if [[ $(echo "$RESPONSE" | jq -r '.status') == "Available" ]]; then
+          IP=$THIRD_IP
+          return  
+      fi
+      sleep 1
+  done
+
+  for ((RETRIES=0; RETRIES<$MAX_RETRIES; RETRIES++)); do
       RESPONSE=$(curl -s --max-time 2 "${API_URL}/${FIRST_IP}")
       if [[ $(echo "$RESPONSE" | jq -r '.status') == "Available" ]]; then
           IP=$FIRST_IP
-      else
-          IP=${IP_LIST[1]}
+          return  
       fi
-  fi
+      sleep 1
+  done
+  IP=$FIRST_IP
 }
+
+
+
 
 get_links(){
 ISP=$(curl -s --max-time 2 https://speed.cloudflare.com/meta | awk -F\" '{print $26}' | sed -e 's/ /_/g' || echo "0")
