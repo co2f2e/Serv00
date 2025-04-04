@@ -31,6 +31,9 @@ https://ac.fkj.pp.ua
 ## Serv00服务器状态查询
 https://status.eooce.com
 
+  schedule:
+    - cron: '0 */5 * * *'  # 每 5 小时执行一次
+
 
 
 
