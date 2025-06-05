@@ -17,34 +17,32 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set server variables
-        id: set_vars
+      - name: Set common secrets
         run: |
-          if [ "${{ matrix.server }}" == "1" ]; then
-            echo "SERVER_USERNAME=coffeebabysoster" >> $GITHUB_ENV
-            echo "SERVER_HOSTNAME=${{ secrets.SERVER1_HOSTNAME }}" >> $GITHUB_ENV
-            echo "SERVER_PASSWORD=${{ secrets.SERVER1_PASSWORD }}" >> $GITHUB_ENV
-            echo "UUID=${{ secrets.SERVER1_UUID }}" >> $GITHUB_ENV
-            echo "UDPPORT=15370" >> $GITHUB_ENV
-          elif [ "${{ matrix.server }}" == "2" ]; then
-            echo "SERVER_USERNAME=coffeebabyheart" >> $GITHUB_ENV
-            echo "SERVER_HOSTNAME=${{ secrets.SERVER8_HOSTNAME }}" >> $GITHUB_ENV
-            echo "SERVER_PASSWORD=${{ secrets.SERVER8_PASSWORD }}" >> $GITHUB_ENV
-            echo "UUID=${{ secrets.SERVER8_UUID }}" >> $GITHUB_ENV
-            echo "UDPPORT=40428" >> $GITHUB_ENV
-          elif [ "${{ matrix.server }}" == "3" ]; then
-            echo "SERVER_USERNAME=coffeebabyworker" >> $GITHUB_ENV
-            echo "SERVER_HOSTNAME=${{ secrets.SERVER9_HOSTNAME }}" >> $GITHUB_ENV
-            echo "SERVER_PASSWORD=${{ secrets.SERVER9_PASSWORD }}" >> $GITHUB_ENV
-            echo "UUID=${{ secrets.SERVER9_UUID }}" >> $GITHUB_ENV
-            echo "UDPPORT=57019" >> $GITHUB_ENV
-          elif [ "${{ matrix.server }}" == "4" ]; then
-            echo "SERVER_USERNAME=coffeebabybaby" >> $GITHUB_ENV
-            echo "SERVER_HOSTNAME=${{ secrets.SERVER10_HOSTNAME }}" >> $GITHUB_ENV
-            echo "SERVER_PASSWORD=${{ secrets.SERVER10_PASSWORD }}" >> $GITHUB_ENV
-            echo "UUID=${{ secrets.SERVER10_UUID }}" >> $GITHUB_ENV
-            echo "UDPPORT=32938" >> $GITHUB_ENV
-          fi
+          echo "SERVER_HOSTNAME=${{ secrets.SERVER_HOSTNAME }}" >> $GITHUB_ENV
+          echo "SERVER_PASSWORD=${{ secrets.SERVER_PASSWORD }}" >> $GITHUB_ENV
+          echo "UUID=${{ secrets.SERVER_UUID }}" >> $GITHUB_ENV
+
+      - name: Set server-specific variables
+        run: |
+          case "${{ matrix.server }}" in
+            1)
+              echo "SERVER_USERNAME=coffeebabysoster" >> $GITHUB_ENV
+              echo "UDPPORT=15370" >> $GITHUB_ENV
+              ;;
+            2)
+              echo "SERVER_USERNAME=coffeebabyheart" >> $GITHUB_ENV
+              echo "UDPPORT=40428" >> $GITHUB_ENV
+              ;;
+            3)
+              echo "SERVER_USERNAME=coffeebabyworker" >> $GITHUB_ENV
+              echo "UDPPORT=57019" >> $GITHUB_ENV
+              ;;
+            4)
+              echo "SERVER_USERNAME=coffeebabybaby" >> $GITHUB_ENV
+              echo "UDPPORT=32938" >> $GITHUB_ENV
+              ;;
+          esac
             
       - name: Install sshpass
         run: sudo apt-get install -y sshpass || echo "sshpass already installed"
