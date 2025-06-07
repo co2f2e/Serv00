@@ -6,7 +6,7 @@
 * 确保Serv00上没有安装别的东西
 * 首先进行面板设置
 
-## 使用
+## 方式一：使用
 * 命令后面第一个参数为面板已添加的一个UDP端口,第二个参数为设置一个节点密码
 ```bash
 bash -c "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/singbox_install.sh)" -- 9999 xxxx
@@ -21,7 +21,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/node_i
 bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_serv00.sh)
 ```
 
-## 保活&卸载
+## 方式二：批量使用&保活&卸载
 * 参考keep_serv00.yml
 * 参考singbox_uninstall.yml
 
