@@ -5,7 +5,7 @@ echo
 
 delete_all_ports() {
     local ports
-    ports=$(devil port list | awk 'NR>1 {print $1, $2}' | grep -E '^[0-9]+ (tcp|udp)$')
+    ports=$(devil port list | awk 'NR>1 {print $2, $1}' | grep -E '^[0-9]+ (tcp|udp)$')
 
     while read -r port type; do
         if [[ "$type" =~ ^(tcp|udp)$ && "$port" =~ ^[0-9]+$ ]]; then
