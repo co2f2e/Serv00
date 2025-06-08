@@ -28,19 +28,15 @@ jobs:
           case "${{ matrix.server }}" in
             1)
               echo "SERVER_USERNAME=coffeebabysoster" >> $GITHUB_ENV
-              echo "UDPPORT=15370" >> $GITHUB_ENV
               ;;
             2)
               echo "SERVER_USERNAME=coffeebabyheart" >> $GITHUB_ENV
-              echo "UDPPORT=40428" >> $GITHUB_ENV
               ;;
             3)
               echo "SERVER_USERNAME=coffeebabyworker" >> $GITHUB_ENV
-              echo "UDPPORT=57019" >> $GITHUB_ENV
               ;;
             4)
               echo "SERVER_USERNAME=coffeebabybaby" >> $GITHUB_ENV
-              echo "UDPPORT=32938" >> $GITHUB_ENV
               ;;
           esac
             
@@ -59,7 +55,7 @@ jobs:
           sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOSTNAME }} 2>/dev/null << EOF
             set -e 
             curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/keep_serv00.sh -o keep_serv00.sh || { echo 'Script download failed'; exit 1; }
-            bash keep_serv00.sh "${{ env.UDPPORT }}" "${{ env.UUID }}" || { echo 'Script execution failed'; exit 1; }
+            bash keep_serv00.sh "${{ env.UUID }}" || { echo 'Script execution failed'; exit 1; }
             if [ $? -eq 0 ]; then
               echo
               echo -e "\033[32mSuccess\033[0m"
