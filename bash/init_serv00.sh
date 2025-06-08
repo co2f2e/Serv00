@@ -4,11 +4,13 @@ echo "此操作将删除所有申请的端口、定时任务、结束当前用�
 echo
 
 delete_all_ports() {
-    local ports tcp_ports udp_ports
+    local ports
+    ports=$(devil port list | awk 'NR>1 {print $1, $2}' | grep -E '^[0-9]+ (tcp|udp)$')
 
-    ports=$(devil port list | awk 'NR>1 {print $1, $2}')
     while read -r port type; do
-        devil port del "$type" "$port"
+        if [[ "$type" =~ ^(tcp|udp)$ && "$port" =~ ^[0-9]+$ ]]; then
+            devil port del "$type" "$port"
+        fi
     done <<< "$ports"
 
     echo "已删除所有端口"
