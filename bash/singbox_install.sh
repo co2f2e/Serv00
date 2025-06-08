@@ -42,6 +42,7 @@ get_udp_port() {
 
 UUID=$1
 HY2_PORT=$(get_udp_port)
+
 USERNAME=$(whoami)
 HOSTNAME=$(hostname)
 
