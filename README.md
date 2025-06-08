@@ -30,6 +30,8 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_s
   - 2.若有多个Serv00账号，请使用相同密码
   - 3.修改如下两处代码片段
 ```bash
+    strategy:
+      matrix:
         server: [1, 2]  # 修改Serv00账号个数，假如两个，与下面的数量必须保持一致，注意格式
 ```
 ```bash
