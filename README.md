@@ -37,7 +37,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_s
 
 ## 方式二：批量使用 & 批量保活 & 批量卸载
 
-### 批量使用 & 批量保活参考
+### 批量使用 & 批量保活
 
 [keep_serv00.yml](.github/workflows/keep_serv00.yml)
 
@@ -60,11 +60,11 @@ strategy:
     ;;
 ```
 
-### 批量卸载参考
+### 批量卸载
 
 [singbox_uninstall.yml](.github/workflows/singbox_uninstall.yml)
 
-- 修改部分同上
+1. 修改部分同上
 
 ---
 
