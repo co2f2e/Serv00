@@ -3,14 +3,13 @@ clear
 echo "此操作将删除所有申请的端口、定时任务、结束当前用户所有进程、并删除当前用户主目录下的所有文件和文件夹、包括隐藏文件、退出SSH连接"
 echo
 
-delete_ports() {
-    local ports
+delete_all_ports() {
+    local ports tcp_ports udp_ports
 
-    ports=$(devil port list | awk 'NR>1 {print $1}')
-
-    for port in $ports; do
-        devil port remove "$port"
-    done
+    ports=$(devil port list | awk 'NR>1 {print $1, $2}')
+    while read -r port type; do
+        devil port del "$type" "$port"
+    done <<< "$ports"
 
     echo "已删除所有端口"
 }
