@@ -17,7 +17,7 @@ delete_all_ports() {
 while true; do
     read -p "你确定要继续初始化吗? (y/n): " confirm
     if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
-        delete_ports
+        delete_all_ports
         echo "" > null
         crontab null
         rm null
