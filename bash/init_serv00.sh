@@ -12,7 +12,7 @@ delete_all_ports() {
             devil port del "$type" "$port"
         fi
     done <<< "$ports"
-
+    echo
     echo "已删除所有端口"
 }
 
