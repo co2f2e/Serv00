@@ -25,9 +25,10 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_s
 ```
 
 ## 方式二：批量使用&批量保活&批量卸载
-# 参考[keep_serv00.yml](.github/workflows/keep_serv00.yml)
+### 参考[keep_serv00.yml](.github/workflows/keep_serv00.yml)
   - 1.添加存储库机密`SERVER_PASSWORD`，`SERVER_HOSTNAME`，`PASSWORD`
-  - 2.修改两处代码片段
+  - 2.若有多个Serv00账号，请使用相同密码
+  - 3.修改如下两处代码片段
 ```bash
         server: [1, 2]  # 修改Serv00账号个数，假如两个，与下面的数量必须保持一致，注意格式
 ```
@@ -39,7 +40,8 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_s
               echo "SERVER_USERNAME=替换为你的第2个账号" >> $GITHUB_ENV
               ;;
 ```
-# 参考[singbox_uninstall.yml](.github/workflows/singbox_uninstall.yml)
+### 参考[singbox_uninstall.yml](.github/workflows/singbox_uninstall.yml)
+  — 1.修改部分同上
 
 ## Serv00账号状态查询
 https://ac.fkj.pp.ua
