@@ -26,19 +26,15 @@ jobs:
           case "${{ matrix.server }}" in
             1)
               echo "SERVER_USERNAME=coffeebabysoster" >> $GITHUB_ENV
-              echo "UDPPORT=15370" >> $GITHUB_ENV
               ;;
             2)
               echo "SERVER_USERNAME=coffeebabyheart" >> $GITHUB_ENV
-              echo "UDPPORT=40428" >> $GITHUB_ENV
               ;;
             3)
               echo "SERVER_USERNAME=coffeebabyworker" >> $GITHUB_ENV
-              echo "UDPPORT=57019" >> $GITHUB_ENV
               ;;
             4)
               echo "SERVER_USERNAME=coffeebabybaby" >> $GITHUB_ENV
-              echo "UDPPORT=32938" >> $GITHUB_ENV
               ;;
           esac
             
