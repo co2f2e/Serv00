@@ -46,7 +46,6 @@ HY2_PORT=$(get_udp_port)
 USERNAME=$(whoami)
 HOSTNAME=$(hostname)
 
-
 if [[ "$HOSTNAME" == "s1.ct8.pl" ]]; then
     WORKDIR="domains/${USERNAME}.ct8.pl/logs"
 else
