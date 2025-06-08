@@ -14,6 +14,10 @@ bash -c "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/si
 ```bash
 bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/node_info.sh)
 ```
+* 卸载
+```bash
+bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/singbox_uninstall.sh)
+```
 
 * 恢复如初
 ```bash
