@@ -24,9 +24,22 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/singbo
 bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_serv00.sh)
 ```
 
-## 方式二：批量使用&保活&卸载
-* 参考keep_serv00.yml
-* 参考singbox_uninstall.yml
+## 方式二：批量使用&批量保活&批量卸载
+# 参考[keep_serv00.yml](.github/workflows/keep_serv00.yml)
+  - 1.添加存储库机密`SERVER_PASSWORD`，`SERVER_HOSTNAME`，`PASSWORD`
+  - 2.修改两处代码片段
+```bash
+        server: [1, 2]  # 修改Serv00账号个数，假如两个，与下面的数量必须保持一致，注意格式
+```
+```bash
+            1)
+              echo "SERVER_USERNAME=替换为你的第1个账号" >> $GITHUB_ENV
+              ;;
+            2)
+              echo "SERVER_USERNAME=替换为你的第2个账号" >> $GITHUB_ENV
+              ;;
+```
+# 参考[singbox_uninstall.yml](.github/workflows/singbox_uninstall.yml)
 
 ## Serv00账号状态查询
 https://ac.fkj.pp.ua
