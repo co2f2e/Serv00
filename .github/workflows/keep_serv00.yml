@@ -22,7 +22,7 @@ jobs:
         run: |
           echo "SERVER_HOSTNAME=${{ secrets.SERVER_HOSTNAME }}" >> $GITHUB_ENV
           echo "SERVER_PASSWORD=${{ secrets.SERVER_PASSWORD }}" >> $GITHUB_ENV
-          echo "UUID=${{ secrets.SERVER_UUID }}" >> $GITHUB_ENV
+          echo "PASSWORD=${{ secrets.PASSWORD }}" >> $GITHUB_ENV
 
       - name: Set server-specific variables
         run: |
@@ -56,7 +56,7 @@ jobs:
           sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOSTNAME }} 2>/dev/null << EOF
             set -e 
             curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/keep_serv00.sh -o keep_serv00.sh || { echo 'Script download failed'; exit 1; }
-            bash keep_serv00.sh "${{ env.UUID }}" || { echo 'Script execution failed'; exit 1; }
+            bash keep_serv00.sh "${{ env.PASSWORD }}" || { echo 'Script execution failed'; exit 1; }
             if [ $? -eq 0 ]; then
               echo
               echo -e "\033[32mSuccess\033[0m"
