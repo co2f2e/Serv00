@@ -40,7 +40,7 @@ manage_ports() {
     if [[ -n "$udp_port" ]]; then
         echo "已删除所有TCP端口，只保留了一个UDP端口"
     else
-        echo "已删除所有端口"
+        echo "已删除所有TCP端口"
     fi
 }
 
