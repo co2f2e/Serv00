@@ -7,9 +7,9 @@
 * 首先进行面板设置
 
 ## 方式一：使用
-* 命令后面第一个参数为面板已添加的一个UDP端口,第二个参数为设置一个节点密码
+* 命令后面参数为节点密码
 ```bash
-bash -c "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/singbox_install.sh)" -- 9999 xxxx
+bash -c "$(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/singbox_install.sh)" -- xxxx
 ```
 * 查看节点信息
 ```bash
