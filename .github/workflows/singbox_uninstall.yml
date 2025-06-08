@@ -19,7 +19,6 @@ jobs:
         run: |
           echo "SERVER_HOSTNAME=${{ secrets.SERVER_HOSTNAME }}" >> $GITHUB_ENV
           echo "SERVER_PASSWORD=${{ secrets.SERVER_PASSWORD }}" >> $GITHUB_ENV
-          echo "UUID=${{ secrets.SERVER_UUID }}" >> $GITHUB_ENV
 
       - name: Set server-specific variables
         run: |
