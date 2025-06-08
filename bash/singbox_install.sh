@@ -41,7 +41,7 @@ get_udp_port() {
 }
 
 UUID=$1
-HY_PORT=$(get_udp_port)
+HY2_PORT=$(get_udp_port)
 USERNAME=$(whoami)
 HOSTNAME=$(hostname)
 
@@ -166,7 +166,7 @@ openssl req -new -x509 -days 3650 -key "private.key" -out "cert.pem" -subj "/CN=
        "tag": "hysteria-in",
        "type": "hysteria2",
        "listen": "$IP",
-       "listen_port": $HY_PORT,
+       "listen_port": $HY2_PORT,
        "users": [
          {
              "password": "${UUID}"
@@ -312,11 +312,11 @@ get_name() { if [ "$HOSTNAME" = "s1.ct8.pl" ]; then SERVER="CT8"; else SERVER=$(
 NAME="$ISP-$(get_name)"
 if [[ "$HOSTNAME" == "s1.ct8.pl" ]]; then
     cat > list.txt <<EOF
-hysteria2://${UUID}@$IP:$HY_PORT/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-${HOSTNAME}
+hysteria2://${UUID}@$IP:$HY2_PORT/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-${HOSTNAME}
 EOF
 else
     cat > list.txt <<EOF
-hysteria2://${UUID}@$IP:$HY_PORT/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-${USERNAME}
+hysteria2://${UUID}@$IP:$HY2_PORT/?sni=www.bing.com&alpn=h3&insecure=1#$NAME-${USERNAME}
 EOF
 fi
 echo
