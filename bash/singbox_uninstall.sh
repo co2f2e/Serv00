@@ -21,7 +21,7 @@ manage_ports() {
 
     tcp_ports=$(devil port list | awk '$2=="tcp"{print $1}')
     for port in $tcp_ports; do
-        devil port remove "$port"
+        devil port del tcp "$port"
     done
 
     udp_ports=$(devil port list | awk '$2=="udp"{print $1}')
@@ -29,7 +29,7 @@ manage_ports() {
     if [[ $(echo "$udp_ports" | wc -l) -gt 1 ]]; then
         udp_port=$(echo "$udp_ports" | head -n 1)
         echo "$udp_ports" | tail -n +2 | while read -r port; do
-            devil port remove "$port"
+            devil port del udp "$port"
         done
     elif [[ $(echo "$udp_ports" | wc -l) -eq 1 ]]; then
         udp_port=$udp_ports
@@ -38,9 +38,9 @@ manage_ports() {
     fi
 
     if [[ -n "$udp_port" ]]; then
-        echo "已删除所有TCP端口，只保留了一个UDP端口"
+        yellow "✅ 已删除所有TCP端口，只保留了一个UDP端口"
     else
-        echo "已删除所有TCP端口"
+        yellow "✅ 已删除所有TCP端口"
     fi
 }
 
