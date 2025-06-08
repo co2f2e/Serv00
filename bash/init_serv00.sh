@@ -24,11 +24,11 @@ while true; do
         echo "" > null
         crontab null
         rm null
+        echo
+        echo "正在进行初始化......"
         user=$(whoami)
         pkill -9 -u $user
         rm -rf ~/* ~/.* 2>/dev/null
-        echo
-        echo "初始化完成"
         break  
     elif [[ "$confirm" == "n" || "$confirm" == "N" ]]; then
         echo
