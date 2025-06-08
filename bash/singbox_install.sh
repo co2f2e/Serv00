@@ -11,8 +11,37 @@ yellow() { echo -e "\e[1;33m$1\033[0m"; }
 purple() { echo -e "\e[1;35m$1\033[0m"; }
 reading() { read -p "$(red "$1")" "$2"; }
 
-HY_PORT=$1
-UUID=$2
+get_udp_port() {
+    local udp_port
+    udp_port=$(devil port list | awk '$2=="udp"{print $1; exit}')
+
+    if [[ -n "$udp_port" ]]; then
+        :
+    else
+        local port_lines port_count random_port result rand_port
+        port_lines=$(devil port list | awk 'NR>1')
+        port_count=$(echo "$port_lines" | wc -l)
+
+        if [[ $port_count -ge 3 ]]; then
+            random_port=$(echo "$port_lines" | shuf -n 1 | awk '{print $1}')
+            devil port remove "$random_port"
+        fi
+
+        while true; do
+            rand_port=$(shuf -i 10000-65535 -n 1)
+            result=$(devil port add udp "$rand_port" 2>&1)
+            if [[ $result == *"Ok"* ]]; then
+                udp_port=$rand_port
+                break
+            fi
+        done
+    fi
+
+    echo "$udp_port"
+}
+
+UUID=$1
+HY_PORT=$(get_udp_port)
 USERNAME=$(whoami)
 HOSTNAME=$(hostname)
 
@@ -24,18 +53,6 @@ else
 fi
 
 cronjob="*/2 * * * * bash $WORKDIR/check_process.sh"
-
-port_validation() {
-    [[ -z "$HY_PORT" ]] || ! [[ "$HY_PORT" =~ ^[0-9]+$ ]] || (( HY_PORT < 1024 || HY_PORT > 65535 )) && { echo -e "${yellow}端口为空或端口不在1024~65535范围内${re}"; exit 1; }
-    found=false
-    for port in $(devil port list | grep -i udp | awk '{print $1}' | sort -n); do
-        if [[ "$port" == "$HY_PORT" ]]; then
-            found=true
-            break
-        fi
-    done
-    [[ "$found" == false ]] && { echo -e "${yellow}端口不在已添加的UDP端口中${re}"; exit 1; }
-}
 
 preparatory_work() {
     [ -d "$WORKDIR" ] && rm -rf "$WORKDIR" && mkdir -p "$WORKDIR" && chmod 777 "$WORKDIR" || (mkdir -p "$WORKDIR" && chmod 777 "$WORKDIR")
@@ -330,7 +347,6 @@ chmod +x "check_process.sh"
 echo -e "${yellow}已添加定时任务每2分钟检测一次该进程，如果不存在则后台启动${re}"
 } 
 
-port_validation "$HY_PORT"
 preparatory_work
 get_ip
 install_singbox
