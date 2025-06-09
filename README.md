@@ -68,7 +68,7 @@ strategy:
 
 ### 批量卸载
 
-1. 修改[singbox_uninstall.yml](.github/workflows/singbox_uninstall.yml)中前两处代码片段同上两处
+1. 修改[singbox_uninstall.yml](.github/workflows/singbox_uninstall.yml)中前两处代码片段同上前两处
 2. 修改[singbox_uninstall.yml](.github/workflows/singbox_uninstall.yml)中最后一处代码片段
 
 ```bash
