@@ -37,13 +37,16 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_s
 
 ## 方式二：批量使用 & 批量保活 & 批量卸载
 
+- 运行结果，节点信息请请点击Actions，在最新的workflows中查看
+
 ### 批量使用 & 批量保活
 
 [keep_serv00.yml](.github/workflows/keep_serv00.yml)
 
-1. 添加存储库机密：`SERVER_PASSWORD`、`SERVER_HOSTNAME`、`PASSWORD`  
-2. 若有多个 Serv00 账号，请使用相同密码  
-3. 修改以下两处代码片段：
+1. 启用Actions
+2. 添加存储库机密：`SERVER_PASSWORD`、`SERVER_HOSTNAME`、`PASSWORD`  
+3. 若有多个 Serv00 账号，请使用相同密码  
+4. 修改以下两处代码片段：
 
 ```bash
 strategy:
