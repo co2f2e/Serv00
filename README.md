@@ -42,11 +42,11 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_s
 ### 批量使用 & 批量保活
 
 [keep_serv00.yml](.github/workflows/keep_serv00.yml)
-
+1. fork本仓库
 1. 启用Actions
 2. 添加存储库机密：`SERVER_PASSWORD`、`SERVER_HOSTNAME`、`PASSWORD`  
 3. 若有多个 Serv00 账号，请使用相同密码  
-4. 修改以下两处代码片段：
+4. 修改以下三处代码片段：
 
 ```bash
 strategy:
@@ -63,11 +63,20 @@ strategy:
     ;;
 ```
 
+```bash
+            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/keep_serv00.sh -o keep_serv00.sh || { echo 'Script download failed'; exit 1; } # 替换为你的URL
+```
+
 ### 批量卸载
 
 [singbox_uninstall.yml](.github/workflows/singbox_uninstall.yml)
 
-1. 修改部分同上
+1. 前两处修改部分同上
+2. 修改最后一处
+
+···bash
+            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/singbox_uninstall.sh -o singbox_uninstall.sh || { echo 'Script download failed'; exit 1; } # 替换为你的URL
+```
 
 ---
 
