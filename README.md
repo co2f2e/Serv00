@@ -77,6 +77,12 @@ strategy:
 
 ---
 
+## 方式三：批量使用 & 批量保活 & 批量卸载
+
+- [参考](https://github.com/Meokj/MyServ00)  
+
+---
+
 ## 账号与服务器状态查询
 
 - [Serv00 账号状态查询](https://ac.fkj.pp.ua)  
