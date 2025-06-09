@@ -35,51 +35,9 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_s
 
 ---
 
-## 方式二：批量使用 & 批量保活 & 批量卸载 更新中。。。。
+## 方式二：批量使用 & 批量保活 & 批量卸载
 
-- 要查看最新的工作流程运行记录和节点信息，请前往Actions页面
-
-### 批量使用 & 批量保活  
-
-1. fork本仓库
-3. 启用Actions
-4. 添加存储库机密：`SERVER_PASSWORD`、`SERVER_HOSTNAME`、`PASSWORD`  
-5. 若有多个 Serv00 账号，请使用相同密码  
-6. 修改[keep_serv00.yml](.github/workflows/keep_serv00.yml)中三处代码片段：
-
-```bash
-strategy:
-  matrix:
-    server: [1, 2]  # 修改 Serv00 账号个数，假如有两个，与下面数量保持一致，注意格式
-```
-
-```bash
-  1)
-    echo "SERVER_USERNAME=替换为你的第1个账号" >> $GITHUB_ENV
-    ;;
-  2)
-    echo "SERVER_USERNAME=替换为你的第2个账号" >> $GITHUB_ENV
-    ;;
-```
-
-```bash
-            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/keep_serv00.sh -o keep_serv00.sh || { echo 'Script download failed'; exit 1; } # 替换为你的URL
-```
-
-### 批量卸载
-
-1. 修改[singbox_uninstall.yml](.github/workflows/singbox_uninstall.yml)中前两处代码片段同上前两处
-2. 修改[singbox_uninstall.yml](.github/workflows/singbox_uninstall.yml)中最后一处代码片段
-
-```bash
-            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/singbox_uninstall.sh -o singbox_uninstall.sh || { echo 'Script download failed'; exit 1; } # 替换为你的URL
-```
-
----
-
-## 方式三：批量使用 & 批量保活 & 批量卸载  更行中。。。
-
-- [参考](https://github.com/Meokj/MyServ00)  
+-注意：由于在yml文件中暴漏了serv00账号，不太安全，yml文件均已修改，自行参考，之后会更新使用教程
 
 ---
 
