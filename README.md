@@ -37,7 +37,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_s
 
 ## 方式二：批量使用 & 批量保活 & 批量卸载
 
-- 运行结果和节点信息请点击Actions，在最新的workflow中查看logs
+- 要查看最新的工作流程运行记录和节点信息，请前往Actions页面
 
 ### 批量使用 & 批量保活
 
