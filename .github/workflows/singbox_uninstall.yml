@@ -1,7 +1,7 @@
 name: singbox_uninstall
 
 on:
-  workflow_dispatch:  # 支持手动执行  
+  workflow_dispatch:
 
 jobs:
   singbox_uninstall:
@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        server: [1, 2, 3, 4]  
+        server: [1, 2, 3, 4]
 
     steps:
       - name: Checkout repository
@@ -20,44 +20,37 @@ jobs:
           echo "SERVER_HOSTNAME=${{ secrets.SERVER_HOSTNAME }}" >> $GITHUB_ENV
           echo "SERVER_PASSWORD=${{ secrets.SERVER_PASSWORD }}" >> $GITHUB_ENV
 
-      - name: Set server-specific secrets and alias
+      - name: Set server-specific username
         run: |
           case "${{ matrix.server }}" in
             1)
-              echo "SERVER_USERNAME=${{ secrets.SERVER_USERNAME_1 }}" >> $GITHUB_ENV
-              echo "SERVER_ALIAS=节点1" >> $GITHUB_ENV
-              ;;
-            2)
-              echo "SERVER_USERNAME=${{ secrets.SERVER_USERNAME_2 }}" >> $GITHUB_ENV
-              echo "SERVER_ALIAS=节点2" >> $GITHUB_ENV
-              ;;
-            3)
-              echo "SERVER_USERNAME=${{ secrets.SERVER_USERNAME_3 }}" >> $GITHUB_ENV
-              echo "SERVER_ALIAS=节点3" >> $GITHUB_ENV
-              ;;
-            4)
-              echo "SERVER_USERNAME=${{ secrets.SERVER_USERNAME_4 }}" >> $GITHUB_ENV
-              echo "SERVER_ALIAS=节点4" >> $GITHUB_ENV
-              ;;
+             echo "USERNAME=${{ vars.USERNAME_1 }}" >> $GITHUB_ENV
+            ;;
+           2)
+             echo "USERNAME=${{ vars.USERNAME_2 }}" >> $GITHUB_ENV
+           ;;
+          3)
+             echo "USERNAME=${{ vars.USERNAME_3 }}" >> $GITHUB_ENV
+           ;;
+          4)
+             echo "USERNAME=${{ vars.USERNAME_4 }}" >> $GITHUB_ENV
           esac
-          
+
       - name: Install sshpass
         run: sudo apt-get install -y sshpass || echo "sshpass already installed"
 
       - name: SSH into server and run script
         run: |
 
-          sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOSTNAME }} -o ConnectTimeout=10 2>/tmp/ssh_error.log || {
-            echo -e "\033[31m❌ SSH连接失败: ${{ env.SERVER_ALIAS }}\033[0m"
-            echo -e "\033[31m错误详情:\033[0m"
+          sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.USERNAME }}@${{ env.SERVER_HOSTNAME }} -o ConnectTimeout=10 2>/tmp/ssh_error.log || {
+            echo -e "\n❌ SSH连接失败\n"
             cat /tmp/ssh_error.log
             exit 1
           }
 
-          sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOSTNAME }} 2>/dev/null << EOF
-            SERVER_ALIAS="${{ env.SERVER_ALIAS }}"
+          sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.USERNAME }}@${{ env.SERVER_HOSTNAME }} 2>/dev/null << EOF
             set -e 
-            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/singbox_uninstall.sh -o singbox_uninstall.sh || { echo "❌ 脚本下载失败: \$SERVER_ALIAS"; exit 1; }
-            bash singbox_uninstall.sh || { echo "❌ 脚本执行失败: \$SERVER_ALIAS"; exit 1; }
-            echo -e "\n✅ 脚本执行成功: \$SERVER_ALIAS\n"
+            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/singbox_uninstall.sh -o singbox_uninstall.sh || { echo "\n❌ 脚本下载失败\n"; exit 1; }
+            bash singbox_uninstall.sh || { echo "\n❌ 脚本执行失败\n"; exit 1; }
+            echo -e "\n✅ 脚本执行成功\n"
           EOF
