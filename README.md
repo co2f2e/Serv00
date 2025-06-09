@@ -35,11 +35,11 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_s
 
 ---
 
-## 方式二：批量使用 & 批量保活 & 批量卸载
+## 方式二：批量使用 & 批量保活 & 批量卸载 更新中。。。。
 
 - 要查看最新的工作流程运行记录和节点信息，请前往Actions页面
 
-### 批量使用 & 批量保活
+### 批量使用 & 批量保活  
 
 1. fork本仓库
 3. 启用Actions
@@ -77,7 +77,7 @@ strategy:
 
 ---
 
-## 方式三：批量使用 & 批量保活 & 批量卸载
+## 方式三：批量使用 & 批量保活 & 批量卸载  更行中。。。
 
 - [参考](https://github.com/Meokj/MyServ00)  
 
