@@ -52,7 +52,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_s
 > 所以添加账号名时请记录下来添加的账号顺序  
 > 工作流哪个任务执行失败根据输出的别名可以快速定位到账号
 
-7. 修改[keep_serv00.yml](.github/workflows/keep_serv00.yml)中三处代码片段：
+6. 修改[keep_serv00.yml](.github/workflows/keep_serv00.yml)中三处代码片段：
 
 ```bash
 strategy:
