@@ -46,7 +46,8 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_s
 3. 启用Actions
 4. 首先添加三个存储库机密：`SERVER_PASSWORD`、`SERVER_HOSTNAME`、`PASSWORD`
 5. 假如有两个账号，储存库机密还需要添加`SERVER_USERNAME_1`，`SERVER_USERNAME_2`，以此类推
-   > ⚠️ **注意：** 因为账号名是机密，任务执行成功日志中的节点信息最后面的账户名会输出为*号，所以添加账号名时请记录下来添加的账号顺序，工作流哪个任务执行失败根据输出的别名可以快速定位到账号
+   > ⚠️ **注意：**
+   >  因为账号名是机密，任务执行成功日志中的节点信息最后面的账户名会输出为*号，所以添加账号名时请记录下来添加的账号顺序，工作流哪个任务执行失败根据输出的别名可以快速定位到账号
 7. 修改[keep_serv00.yml](.github/workflows/keep_serv00.yml)中三处代码片段：
 
 ```bash
