@@ -41,24 +41,23 @@ jobs:
               ;;
           esac
           
-      - name: Print current node alias
-        run: |
-          echo "🖥️ 当前节点: ${{ env.SERVER_ALIAS }}"
-          
       - name: Install sshpass
         run: sudo apt-get install -y sshpass || echo "sshpass already installed"
 
       - name: SSH into server and run script
         run: |
+
           sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOSTNAME }} -o ConnectTimeout=10 2>/tmp/ssh_error.log || {
-            echo -e "\033[31mSSH connection failed! Please check your SSH credentials or server status.\033[0m"
-            echo -e "\033[31mError details:\033[0m"
+            echo -e "\033[31m❌ SSH连接失败: ${{ env.SERVER_ALIAS }}\033[0m"
+            echo -e "\033[31m错误详情:\033[0m"
             cat /tmp/ssh_error.log
             exit 1
-           }
-           
+          }
+
           sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOSTNAME }} 2>/dev/null << EOF
+            SERVER_ALIAS="${{ env.SERVER_ALIAS }}"
             set -e 
-            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/singbox_uninstall.sh -o singbox_uninstall.sh || { echo 'Script download failed'; exit 1; }
-            bash singbox_uninstall.sh || { echo 'Script execution failed'; exit 1; }
+            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/singbox_uninstall.sh -o singbox_uninstall.sh || { echo "❌ 脚本下载失败: \$SERVER_ALIAS"; exit 1; }
+            bash singbox_uninstall.sh || { echo "❌ 脚本执行失败: \$SERVER_ALIAS"; exit 1; }
+            echo -e "\n✅ 脚本执行成功: \$SERVER_ALIAS\n"
           EOF
