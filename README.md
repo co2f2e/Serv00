@@ -42,10 +42,11 @@ bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/init_s
 ### 批量使用 & 批量保活
 
 1. fork本仓库
-1. 启用Actions
-2. 添加存储库机密：`SERVER_PASSWORD`、`SERVER_HOSTNAME`、`PASSWORD`  
-3. 若有多个 Serv00 账号，请使用相同密码  
-4. 修改[keep_serv00.yml](.github/workflows/keep_serv00.yml)中三处代码片段：
+2. 创建新分支dev
+3. 启用Actions
+4. 添加存储库机密：`SERVER_PASSWORD`、`SERVER_HOSTNAME`、`PASSWORD`  
+5. 若有多个 Serv00 账号，请使用相同密码  
+6. 修改[keep_serv00.yml](.github/workflows/keep_serv00.yml)中三处代码片段：
 
 ```bash
 strategy:
