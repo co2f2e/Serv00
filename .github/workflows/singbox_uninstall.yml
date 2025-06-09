@@ -49,13 +49,16 @@ jobs:
 
           sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOSTNAME }} -o ConnectTimeout=10 2>/tmp/ssh_error.log || {
             echo -e "\033[31m❌ SSH连接失败: ${{ env.SERVER_ALIAS }}\033[0m"
+            echo -e "\033[31m错误信息:\033[0m"
             cat /tmp/ssh_error.log
             exit 1
           }
 
-          sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOSTNAME }} 2>/dev/null << EOF
+          sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOSTNAME }} << 'EOF'
             set -e
-            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/keep_serv00.sh -o keep_serv00.sh || { echo '❌ 脚本下载失败'; exit 1; }
-            bash keep_serv00.sh "${{ env.PASSWORD }}" || { echo '❌ 脚本执行失败'; exit 1; }
-            echo -e "\n✅ 脚本执行成功: ${{ env.SERVER_ALIAS }}\n"
+            curl -Ls https://raw.githubusercontent.com/co2f2e/Serv00/main/bash/singbox_uninstall.sh -o singbox_uninstall.sh || { echo "❌ 脚本下载失败: $SERVER_ALIAS"; exit 1; }
+            bash singbox_uninstall.sh "$PASSWORD" || { echo "❌ 脚本执行失败: $SERVER_ALIAS"; exit 1; }
+            echo -e "\n✅ 脚本执行成功: $SERVER_ALIAS\n"
           EOF
+        env:
+          SERVER_ALIAS: ${{ env.SERVER_ALIAS }}
