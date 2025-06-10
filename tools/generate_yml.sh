@@ -1,6 +1,6 @@
 #!/bin/bash
 clear
-read -rp "请输入要生成的服务器数量（正整数）: " count
+read -rp "请输入Serv00账号数量（正整数）: " count
 
 COUNT=$count
 
