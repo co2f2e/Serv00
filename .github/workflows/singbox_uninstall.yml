@@ -1,10 +1,10 @@
-name: singbox_uninstall
+name: uninstall_hy2
 
 on:
   workflow_dispatch:
 
 jobs:
-  singbox_uninstall:
+  uninstall_hy2:
     runs-on: ubuntu-latest
 
     strategy:
@@ -50,7 +50,7 @@ jobs:
 
           sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.USERNAME }}@${{ env.SERVER_HOSTNAME }} 2>/dev/null << EOF
             set -e 
-            curl -Ls https://raw.githubusercontent.com/Meokj/MyServ00/main/bash/singbox_uninstall.sh -o singbox_uninstall.sh || { echo "\n❌ 脚本下载失败\n"; exit 1; }
-            bash singbox_uninstall.sh || { echo "\n❌ 脚本执行失败\n"; exit 1; }
+            curl -Ls https://raw.githubusercontent.com/Meokj/MyServ00/main/test/uninstall_hy2.sh -o uninstall_hy2.sh || { echo "\n❌ 脚本下载失败\n"; exit 1; }
+            bash uninstall_hy2.sh || { echo "\n❌ 脚本执行失败\n"; exit 1; }
             echo -e "\n✅ 脚本执行成功\n"
           EOF
