@@ -1,4 +1,4 @@
-name: keep_serv00
+name: keep_hy2
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
   #   - cron: '0 16 * * *'  # 每天北京时间 00:00（UTC+8）
 
 jobs:
-  keep_serv00:
+  keep_hy2:
     runs-on: ubuntu-latest
 
     strategy:
@@ -54,7 +54,7 @@ jobs:
 
           sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.USERNAME }}@${{ env.SERVER_HOSTNAME }} 2>/dev/null << EOF
             set -e 
-            curl -Ls https://raw.githubusercontent.com/Meokj/MyServ00/main/bash/keep_serv00.sh -o keep_serv00.sh || { echo "\n❌ 脚本下载失败\n"; exit 1; }
-            bash keep_serv00.sh "${{ env.PASSWORD }}" || { echo "\n❌ 脚本执行失败\n"; exit 1; }
+            curl -Ls https://raw.githubusercontent.com/Meokj/MyServ00/main/test/keep_hy2.sh -o keep_hy2.sh || { echo "\n❌ 脚本下载失败\n"; exit 1; }
+            bash keep_hy2.sh "${{ env.PASSWORD }}" || { echo "\n❌ 脚本执行失败\n"; exit 1; }
             echo -e "\n✅ 脚本执行成功\n"
           EOF
