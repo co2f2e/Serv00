@@ -66,7 +66,7 @@ jobs:
         run: |
           echo "Aggregated Logs:"
           for i in 1 2 3 4; do
-            log_file="${{ env.log_file_${i} }}"
+            log_file="get_statistics_${i}.log"
             if [ -f "$log_file" ]; then
               echo "Logs from server $i:"
               cat "$log_file"
