@@ -1,10 +1,10 @@
-name: get_traffic
+name: get_statistics
 
 on:
   workflow_dispatch:
 
 jobs:
-  get_traffic:
+  get_statistics:
     runs-on: ubuntu-latest
 
     strategy:
@@ -52,7 +52,7 @@ jobs:
 
           sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.USERNAME }}@${{ env.SERVER_HOSTNAME }} 2>/dev/null << EOF
             set -e 
-            curl -Ls https://raw.githubusercontent.com/Meokj/MyServ00/main/hy2/get_traffic.sh -o get_traffic.sh || { echo "❌ 脚本下载失败"; exit 1; }
-            bash get_traffic.sh "${{ env.PASSWORD }}" || { echo "❌ 脚本执行失败"; exit 1; }
+            curl -Ls https://raw.githubusercontent.com/Meokj/MyServ00/main/hy2/get_statistics.sh -o get_statistics.sh || { echo "❌ 脚本下载失败"; exit 1; }
+            bash get_statistics.sh "${{ env.PASSWORD }}" || { echo "❌ 脚本执行失败"; exit 1; }
             echo -e "✅ 脚本执行成功"
           EOF
