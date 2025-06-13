@@ -67,6 +67,7 @@ jobs:
           echo "Aggregated Logs:"
           for i in 1 2 3 4; do
             log_file="get_statistics_${i}.log"
+            echo "Checking for log file: $log_file"
             if [ -f "$log_file" ]; then
               echo "Logs from server $i:"
               cat "$log_file"
