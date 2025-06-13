@@ -42,7 +42,7 @@ jobs:
         run: sudo apt-get install -y sshpass || echo "sshpass already installed"
 
       - name: Set LOG_FILE environment variable
-        run: echo "LOG_FILE=server_${{ matrix.server }}_log.txt" >> $GITHUB_ENV  
+        run: echo "LOG_FILE=aggregated_log.txt" >> $GITHUB_ENV  
 
       - name: SSH into server and run script
         run: |
@@ -59,7 +59,8 @@ jobs:
             bash get_statistics.sh "${{ env.PASSWORD }}" || { echo "❌ 脚本执行失败"; exit 1; }
             echo -e "✅ 脚本执行成功"
           EOF
-          echo "log=$(cat $LOG_FILE)" >> $GITHUB_ENV  # 环境变量 LOG_FILE 为 server_${{ matrix.server }}_log.txt
+          echo "log=$(cat $LOG_FILE)" >> $GITHUB_ENV  
+
   aggregate_logs:
     runs-on: ubuntu-latest
     needs: get_statistics
@@ -67,7 +68,4 @@ jobs:
       - name: Aggregate logs
         run: |
           echo "Aggregated Logs:"
-          for i in {1..4}; do
-            echo "Logs from server $i:"
-            echo "${{ env.log }}"  # 访问环境变量
-          done
+          echo "${{ env.log }}"  
