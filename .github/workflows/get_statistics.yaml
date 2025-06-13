@@ -56,3 +56,15 @@ jobs:
             bash get_statistics.sh "${{ env.PASSWORD }}" || { echo "❌ 脚本执行失败"; exit 1; }
             echo -e "✅ 脚本执行成功"
           EOF
+          echo "log=$(cat $LOG_FILE)" >> $GITHUB_ENV  # 添加环境变量将 LOG_FILE 设置为 server_${{ matrix.server }}_log.txt
+  aggregate_logs:
+    runs-on: ubuntu-latest
+    needs: get_statistics
+    steps:
+      - name: Aggregate logs
+        run: |
+          echo "Aggregated Logs:"
+          for i in {1..4}; do
+            echo "Logs from server $i:"
+            echo "${{ env.log }}"  # 访问环境变量
+          done
