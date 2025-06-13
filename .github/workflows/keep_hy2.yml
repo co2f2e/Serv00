@@ -58,17 +58,3 @@ jobs:
             bash keep_hy2.sh "${{ env.PASSWORD }}" || { echo "❌ 脚本执行失败"; exit 1; }
             echo -e "✅ 脚本执行成功"
           EOF
-          cat $LOG_FILE
-          echo "::set-output name=log::$(cat $LOG_FILE)"
-          
-  aggregate_logs:
-    runs-on: ubuntu-latest
-    needs: keep_hy2
-    steps:
-      - name: Aggregate logs
-        run: |
-          echo "Aggregated Logs:"
-          for i in {1..4}; do
-            echo "Logs from server $i:"
-            echo "${{ needs.keep_hy2.outputs.log }}"
-          done
