@@ -42,7 +42,7 @@ jobs:
         run: sudo apt-get install -y sshpass || echo "sshpass already installed"
 
       - name: Set LOG_FILE environment variable
-        run: echo "LOG_FILE=aggregated_log.txt" >> $GITHUB_ENV  
+        run: echo "LOG_FILE=~/aggregated_log.txt" >> $GITHUB_ENV
 
       - name: SSH into server and run script
         run: |
