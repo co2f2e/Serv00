@@ -44,20 +44,25 @@ jobs:
       - name: SSH into server and run script
         run: |
           LOG_FILE="get_statistics_${{ matrix.server }}.log"
+
           {
+            echo "🚀 开始 SSH 执行脚本..."
+
             sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.USERNAME }}@${{ env.SERVER_HOSTNAME }} -o ConnectTimeout=10 2>/tmp/ssh_error.log || {
               echo -e "❌ SSH连接失败"
               cat /tmp/ssh_error.log
               exit 1
             }
 
-            sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.USERNAME }}@${{ env.SERVER_HOSTNAME }} 2>/dev/null << EOF
-              set -e 
+            sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.USERNAME }}@${{ env.SERVER_HOSTNAME }} << 'EOSCRIPT'
+              set -e
               curl -Ls https://raw.githubusercontent.com/Meokj/MyServ00/main/hy2/get_statistics.sh -o get_statistics.sh || { echo "❌ 脚本下载失败"; exit 1; }
-              bash get_statistics.sh "${{ env.PASSWORD }}" || { echo "❌ 脚本执行失败"; exit 1; }
+              bash get_statistics.sh "${PASSWORD}" || { echo "❌ 脚本执行失败"; exit 1; }
               echo -e "✅ 脚本执行成功"
-            EOF
-          } &> "$LOG_FILE"
+EOSCRIPT
+
+          } | tee "$LOG_FILE"
+
           echo "log_file_${{ matrix.server }}=$LOG_FILE" >> $GITHUB_ENV
 
       - name: Upload log artifact
