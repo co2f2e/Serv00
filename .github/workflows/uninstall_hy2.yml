@@ -50,7 +50,6 @@ jobs:
 
           sshpass -p "${{ env.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no -T ${{ env.USERNAME }}@${{ env.SERVER_HOSTNAME }} 2>/dev/null << EOF
             set -e 
-            curl -Ls https://raw.githubusercontent.com/Meokj/MyServ00/main/hy2/uninstall_hy2.sh -o uninstall_hy2.sh || { echo "❌ 脚本下载失败"; exit 1; }
-            bash uninstall_hy2.sh || { echo "❌ 脚本执行失败"; exit 1; }
+            curl -fsSL https://raw.githubusercontent.com/Meokj/MyServ00/main/hy2/uninstall_hy2.sh || { echo "❌ 脚本下载或执行失败"; exit 1; }
             echo -e "✅ 脚本执行成功"
           EOF
